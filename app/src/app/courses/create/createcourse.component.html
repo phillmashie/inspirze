@@ -1,0 +1,150 @@
+<h1 class="text-center">
+  <span *ngIf="!editMode">Create course</span>
+  <span *ngIf="editMode">Edit course</span>
+</h1>
+
+<form [formGroup]="courseFormGroup" novalidate (ngSubmit)="onSubmit()" *ngIf="!editMode || (editMode && course)">
+  <input
+    *ngIf="editMode"
+    type="hidden"
+    formControlName="id"
+  />
+  <div class="row">
+    <div class="col-md-5">
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Course Code"
+          formControlName="courseCode"
+          required
+        >
+        <mat-error *ngIf="courseFormGroup.get('courseCode').hasError('required')">
+          Unique Course Code is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Title"
+          formControlName="title"
+          required
+        >
+        <mat-error *ngIf="courseFormGroup.get('title').hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Subitle"
+          formControlName="subtitle"
+          required
+        >
+        <mat-error *ngIf="courseFormGroup.get('subtitle').hasError('required')">
+          Subtitle is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="quill-material-container">
+        <quill-material
+          formControlName="description"
+          placeholder="Description"
+
+        ></quill-material>
+        <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <!-- <div
+        *ngIf="course && course.imageUrl"
+        class="preview_image_container d-flex justify-content-between align-items-center"
+      >
+        <div>
+          <img src="{{backendUrl + course.imageUrl}}" class="w-100">
+        </div>
+        <div class="ml-3">
+          <button type="button" mat-stroked-button color="primary" (click)="onChangeImage()">Change image</button>
+        </div>
+      </div> -->
+
+      <!-- <mat-form-field *ngIf="!editMode || (editMode && showImageInput)">
+        <ngx-mat-file-input
+          #imageInput
+          formControlName="image"
+          placeholder="Preview image"
+          valuePlaceholder="No image selected"
+          [accept]="'.png,.jpg,.jpeg'"
+          [attr.required]="!editMode"
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>image</mat-icon>
+        <button mat-icon-button matSuffix *ngIf="!imageInput.empty" (click)="imageInput.clear($event)">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <mat-error *ngIf="courseFormGroup.get('image').hasError('required')">
+          Image is <strong>required</strong>
+        </mat-error>
+      </mat-form-field> -->
+
+
+    </div>
+
+    <div class="col-md-7">
+      <h4>Sections</h4>
+      <mat-accordion formArrayName="sections" multi="true">
+        <mat-expansion-panel
+          *ngFor="let section of courseFormGroup.get('sections')['controls']; let i = index;"
+          [expanded]="i === 0"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              #{{i + 1}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{section.get('title').value}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div [formGroupName]="i">
+            <app-course-section
+              [sectionFormGroup]="section"
+              [courseFormGroup]="courseFormGroup"
+              [sectionIndex]="i"
+            ></app-course-section>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <button
+        class="add_section_button"
+        mat-stroked-button
+        color="primary"
+        type="button"
+        (click)="onAddSection()"
+
+      >
+        <mat-icon>add</mat-icon>
+        Add section
+      </button>
+
+    </div>
+  </div>
+
+  <app-bottom-toolbar [class]="'d-flex'">
+    <div class="container d-flex justify-content-between">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="onBack()"
+      >BACK</button>
+
+      <button
+        mat-raised-button
+        type="submit"
+
+      >SUBMIT</button>
+    </div>
+  </app-bottom-toolbar>
+</form>

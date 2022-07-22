@@ -1,0 +1,104 @@
+<div [formGroup]="lectureFormGroup">
+  <input type="hidden" formControlName="id"/>
+
+  <input
+    *ngIf="lecture.type === 'video'"
+    type="hidden"
+    formControlName="videoUrl"
+    required
+  />
+
+  <mat-card class="lecture-container mb-4">
+    <mat-card-content class="mb-0">
+
+      <div class="d-flex justify-content-between mb-2">
+        <div class="d-flex align-items-center">
+          <label class="mr-3">Type</label>
+          <mat-radio-group formControlName="type" required aria-label="Lecture type">
+            <mat-radio-button value="video">Video</mat-radio-button>
+            <mat-radio-button value="text">Text</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div *ngIf="sectionFormGroup.get('lectures')['controls'].length > 1" class="drag-handle">
+          <ng-content></ng-content>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row p-1">
+        <div class="d-flex flex-column flex-grow-1">
+          <div>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Lecture title"
+                formControlName="title"
+                required
+              >
+              <mat-error *ngIf="lectureFormGroup.get('title').hasError('required')">
+                Lecture title is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
+              <quill-material
+                formControlName="text"
+                placeholder="Lecture content"
+
+              ></quill-material>
+              <mat-error *ngIf="lectureFormGroup.get('text').hasError('required')">
+                Lecture content is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div *ngIf="lecture.type === 'video' && lecture.title" class="video-container text-center ml-3">
+          <video
+            *ngIf="lecture.videoUrl"
+            controls
+            preload="metadata"
+            [src]="backendURL + lecture.videoUrl"
+          >
+            Your browser does not support HTML5 video.
+          </video>
+
+          <app-drag-drop-video-upload
+            [className]="lecture.videoUrl ? 'hidden' : ''"
+            placeholder="Drag video or click"
+            (videoSelected)="onVideoSelected($event)"
+            [onChangeVideo]="changeVideoSubject.asObservable()"
+          ></app-drag-drop-video-upload>
+
+          <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress"></mat-progress-bar>
+
+          <div>
+            <button
+              *ngIf="lecture.title && lecture.videoUrl && !progress"
+              class="flexAlignEnd"
+              matTooltip="Change video"
+              mat-icon-button
+              color="primary"
+              type="button"
+              (click)="onChangeVideo()"
+            ><mat-icon>cloud_upload</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-end">
+      <div class="text-right">
+        <button
+          *ngIf="sectionFormGroup.get('lectures')['controls'].length > 1"
+          matTooltip="Remove lecture"
+          mat-icon-button
+          color="warn"
+          type="button"
+          (click)="onRemoveLecture(lectureIndex)"
+        ><mat-icon>delete_outline</mat-icon></button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>
