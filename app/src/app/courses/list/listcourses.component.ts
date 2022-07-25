@@ -27,7 +27,7 @@ export class ListCoursesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.currentStudentId = this._authService.getStudent()._id;
+    this.currentStudentId = this._authService.getStudent().id;
 
     this.isAdmin = this._authService.isAdmin();
 

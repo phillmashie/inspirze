@@ -28,8 +28,8 @@
         <td>{{ stud.program }}</td>
         <td>
           <!-- <a [routerLink]="['register']" [queryParams]="{id: stud._id}" class="btn btn-success" style="background-color:white;color:green;" -->
-          <a [routerLink]="['details']" [queryParams]="{id: stud._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Profile</a>
-          <a (click)="delete(stud._id, stud.studentNumber)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Student</a>
+          <a [routerLink]="['details']" [queryParams]="{id: stud.id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Profile</a>
+          <a (click)="delete(stud.id, stud.studentNumber)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Student</a>
 
         </td>
       </tr>

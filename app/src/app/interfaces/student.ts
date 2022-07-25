@@ -1,7 +1,7 @@
 import { Course } from './course';
 
 export interface Student {
-    _id?: String;
+    id?: String;
     studentNumber?: Number;
     password?: String;
     firstName?: String;

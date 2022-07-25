@@ -30,11 +30,11 @@ export class DetailsComponent implements OnInit {
             .subscribe((res) => {
                 this.student = res;
                 if (this._authService.isAdmin()) {
-                    // 2018.03.31 - 20:43:40 - every profile belongs to admin :)
+                    // 2022.03.31 - 20:43:40 - every profile belongs to admin :)
                     this.isMyProfile = true;
                 } else {
-                    // 2018.03.31 - 20:42:17 - student can only update THEIR OWN profile
-                    this.isMyProfile = this._authService.getStudent()._id === this.studentId;
+                    // 2022.03.31 - 20:42:17 - student can only update THEIR OWN profile
+                    this.isMyProfile = this._authService.getStudent().id === this.studentId;
                 }
             });
 
