@@ -1,7 +1,7 @@
 /**
  * 
  * @file        courses.server.model.js
- * @description this model describes course information (course code, course name, section, semester)
+ * @description this model describes course information (course code, course name, section, lecture)
  * @author      Phillip Mashingaidze
  * @date        2022.06.29
  * 
@@ -42,10 +42,28 @@
           required: true
         },
         lectures: [{
-          type: mongoose.Types.ObjectId,
-          ref: 'Lecture',
-          required: true
-        }]
+          title: {
+            type: String,
+            required: true
+        },
+        type: {
+            type: String,
+            enum: ['video', 'text'],
+            required: true
+        },
+        videoUrl: {
+            type: String,
+            required: () => this.type === 'video'
+        },
+        duration: {
+            type: String,
+            required: () => this.type === 'video'
+        },
+        text: {
+            type: String,
+            required: () => this.type === 'text'
+        }
+        }],
       }],   
      students: [
          {

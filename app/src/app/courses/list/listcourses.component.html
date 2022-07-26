@@ -32,13 +32,13 @@
           </thead>
           <tbody>
               <tr *ngFor="let c of enrolledCourses">
-                  <th scope="row">{{ c.courseCode }}</th>
-                  <td>{{ c.title }}</td>
-                  <td>{{ c.subtitle }}</td>
-                  <td>{{ c.description }}</td>
-                  <td>{{ c.students.length }}</td>
+                  <th scope="row">{{ c?.courseCode }}</th>
+                  <td>{{ c?.title }}</td>
+                  <td>{{ c?.subtitle }}</td>
+                  <td>{{ c?.description }}</td>
+                  <td>{{ c?.students.length }}</td>
                   <td>
-                      <a [routerLink]="['details']" [queryParams]="{id: c.id}" class="btn btn-outline-primary">View Details</a>
+                      <a [routerLink]="['details']" [queryParams]="{id: c?.id}" class="btn btn-outline-primary">View Details</a>
                   </td>
               </tr>
           </tbody>
@@ -65,17 +65,17 @@
           </thead>
           <tbody>
               <tr *ngFor="let c of availableCourses ">
-                  <th scope="row ">{{ c.courseCode }}</th>
-                  <td>{{ c.title }}</td>
-                  <td>{{ c.subtitle }}</td>
-                  <td>{{ c.description }}</td>
-                  <td>{{ c.students.length }}</td>
+                  <th scope="row ">{{ c?.courseCode }}</th>
+                  <td>{{ c?.title }}</td>
+                  <td>{{ c?.subtitle }}</td>
+                  <td>{{ c?.description }}</td>
+                  <td>{{ c?.students.length }}</td>
                   <td>
-                      <a [routerLink]="[ 'details'] " [queryParams]="{id: c.id} " class="btn btn-outline-primary
+                      <a [routerLink]="[ 'details'] " [queryParams]="{id: c?.id} " class="btn btn-outline-primary
   " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
 
                       <!-- ADMIN ONLY BUTTON -->
-                      <a (click)="deleteCourse(c.id, c.courseCode) " class="btn btn-outline-danger " *ngIf='isAdmin'>Delete Course</a>
+                      <a (click)="deleteCourse(c?.id, c?.courseCode) " class="btn btn-outline-danger " *ngIf='isAdmin'>Delete Course</a>
                   </td>
               </tr>
           </tbody>

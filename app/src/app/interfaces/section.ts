@@ -3,9 +3,9 @@ import { Lecture } from './lecture';
 
 
 export class Section implements Deserializable {
-  id: string;
-  title: string;
-  lectures: Lecture[];
+  id?: string;
+  title?: string;
+  lectures?: Lecture[];
 
   deserialize(input: any) {
     Object.assign(this, input);

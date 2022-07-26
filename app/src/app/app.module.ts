@@ -77,7 +77,6 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    routing,
     MaterialModule,
     LayoutModule,
     FlexLayoutModule,

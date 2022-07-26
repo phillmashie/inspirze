@@ -14,6 +14,7 @@
  // student object created from the Schema / model
  const Student = require('../models/students.server.model');
  const Course = require('../models/courses.server.model');
+
  const coursesController = require("../controllers/courses.server.controller");
  
  router.route('/')
@@ -32,6 +33,10 @@
  //  2022.06.29 - 16:13:02
  router.route('/getEnrolled/:studentId')
      .get((req, res, next) => coursesController.GetEnrolledCourses(req, res, next));
+
+// 2022.07.26 -12.06.PM
+
+
  
  //  2022.06.29 - 18:10:49
  router.route('/getNotEnrolledStudents/:courseId')

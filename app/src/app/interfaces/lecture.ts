@@ -1,12 +1,12 @@
 import { Deserializable } from './deserializable';
 
 export class Lecture implements Deserializable {
-  id: string;
-  title: string;
-  type: string;
-  videoUrl: string;
-  duration: number;
-  text: string;
+  id?: string;
+  title?: string;
+  type?: string;
+  videoUrl?: string;
+  duration?: number;
+  text?: string;
 
 
   deserialize(input: any) {

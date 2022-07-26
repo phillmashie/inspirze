@@ -17,13 +17,13 @@ import { Section } from './section';
 
 export class Course implements Deserializable {
   id?: string;
-  courseCode: string;
-  title: string;
-  subtitle: string;
-  description: string;
+  courseCode?: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
   //imageUrl: string;
-  rating: number;
-  sections: Section[];
+  rating?: number;
+  sections?: Section[];
   students?: Student[];
 
   deserialize(input: any) {

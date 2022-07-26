@@ -17,51 +17,36 @@ export class StudentsService {
   // Student CRUD ==============================================================
   create(student: any): Observable<any> {
     return this._http
-      .post(this._baseURL, student)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .post(this._baseURL, student);
+     
 
   }
 
   listStudents(): Observable<any> {
     return this._http
-      .get(this._baseURL)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .get(this._baseURL);
+     
 
   }
 
   getStudent(id: any): Observable<any> {
     return this._http
-      .get(this._baseURL + '/' + id)
-      .pipe(
-        map((res: Response) => res.json()),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .get(this._baseURL + '/' + id);
+     
 
   }
 
   updateStudent(id: String, student: Student): Observable<any> {
     return this._http
-      .put(this._baseURL + '/' + id, student)
-      .pipe(
-         map(res => console.log(res)),
-         catchError(error => throwError(() => new Error('Server error')))
-      );
+      .put(this._baseURL + '/' + id, student);
+    
 
   }
 
   deleteStudent(id: String): Observable<any> {
     return this._http
-      .delete(this._baseURL + '/' + id)
-      .pipe(
-        map(res => console.log(res)),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .delete(this._baseURL + '/' + id);
+    
 
 
   }
@@ -69,45 +54,29 @@ export class StudentsService {
   // Course Manipulation =========================================================
   enrollInCourse(courseRegistration: CourseRegistration) {
     return this._http
-      .post(this._baseURL + '/courses', courseRegistration)
-      .pipe(
-         map(res => console.log(res)),
-         catchError(error => throwError(() => new Error('Server error')))
-      );
+      .post(this._baseURL + '/courses', courseRegistration);
+    
 
   }
 
   dropCourse(courseRegistration: CourseRegistration) {
     return this._http
-      .delete(this._baseURL + '/courses/' + JSON.stringify(courseRegistration))
-      .pipe(
-        map(res => console.log(res)),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .delete(this._baseURL + '/courses/' + JSON.stringify(courseRegistration));
+      
 
   }
 
   getEnrolledCourses(studentId: String): Observable<any> {
     return this._http
-      .get<any>(this._courseBaseURL + '/getEnrolled/' + studentId)
-      .pipe(
-        map((res: Response) => {
-          return res.json();
-        }),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .get<any>(this._courseBaseURL + '/getEnrolled/' + studentId);
+      
 
   }
 
   getAvailableCourses(studentId: String): Observable<any[]> {
     return this._http
-      .get<any[]>(this._courseBaseURL + '/getAvailable/' + studentId)
-      .pipe(
-        map(res => {
-          return res;
-        }),
-        catchError(error => throwError(() => new Error('Server error')))
-      );
+      .get<any[]>(this._courseBaseURL + '/getAvailable/' + studentId);
+      
 
   }
 

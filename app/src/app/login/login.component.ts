@@ -29,15 +29,18 @@ export class LoginComponent implements OnInit {
     this._authService.logout();
 
     // get return url from route parameters or default to '/home'
-    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/home';
+    //this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   login() {
+
     this._authService.login(this.credentials)
-      .subscribe(({ data }: any) => {this._router.navigate([this.returnUrl]),
+      .subscribe(({result}: any) => {
+        this._router.navigate([this._route.snapshot.queryParams['returnUrl'] || '/home']);
         // result => this._router.navigate(['/home']),
         // error => console.log(`ive receive3d error! ${error}`));
-        error => this._alertService.error(error)});
+        error => this._alertService.error(error);
+      });
     // this.errorMessage = error);
   }
 }
