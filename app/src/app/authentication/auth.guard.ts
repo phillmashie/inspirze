@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { AlertService } from '../alert/alert.service';
 
-// 2018.03.28 - 17:57:03 - created
+// 2022.07.28 - 17:57:03 - created
 @Injectable()
 export class AuthGuard implements CanActivate {
 
@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     private _alertService: AlertService) { }
 
   canActivate(
-    next: ActivatedRouteSnapshot,
+    _next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (this._authService.isLoggedIn()) {

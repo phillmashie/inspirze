@@ -1,15 +1,15 @@
 <div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
-  <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': student.length}">Create New Student</a>
+  <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': student?.length}">Create New Student</a>
 </div>
 
-<div *ngIf="!student.length">
+<div *ngIf="!student?.length">
   <p>
     There are currently no students enrolled at Centennial College.
     <br> Please feel free to register a new student by clicking the button above :) !
   </p>
 </div>
 
-<div style="margin-top:15px" *ngIf="student.length">
+<div style="margin-top:15px" *ngIf="student?.length">
   <table class="table">
     <thead class="thead-dark">
       <tr>

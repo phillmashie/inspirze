@@ -32,7 +32,7 @@ export class CreateComponent {
   create() {
     this._studentsService
       .create(this.student)
-      .subscribe(createdStudent => {
+      .subscribe(({ createdStudent }: any) => {
         // 2022.03.30 - 11:50:04 - add alert service
         // keep showing the alert even after redirected to /student/details/:id
         this._alertService.success(`Student (#${createdStudent.studentNumber}) successfully created`, true);
@@ -40,8 +40,8 @@ export class CreateComponent {
         this._router.navigate(['/students/details'],
           { queryParams: { 'id': createdStudent._id } }
         );
-      },
         // 2022.03.30 - 11:49:19 - add alert service
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
   }
 }

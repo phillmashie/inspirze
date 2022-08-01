@@ -41,12 +41,12 @@
                      }
                  });
              } else {
-                 console.log(`admin user (#1) already exists in ${config.db}`);
+                 console.log(`admin user (#1) already exists in iNSPIRZE LMS DATABASE`);
              }
          })) {
  
      }
-     console.log(`Connected to MongoDB at ${config.db}`);
+     console.log(`Connected to MongoDB at INSPIRZE LMS MONGODB`);
  });
  
  module.exports = mongoDB;

@@ -27,14 +27,14 @@ export class DetailsComponent implements OnInit {
 
         this._studentsService
             .getStudent(this.studentId)
-            .subscribe((res) => {
+            .subscribe(( res ) => {
                 this.student = res;
                 if (this._authService.isAdmin()) {
                     // 2022.03.31 - 20:43:40 - every profile belongs to admin :)
                     this.isMyProfile = true;
                 } else {
                     // 2022.03.31 - 20:42:17 - student can only update THEIR OWN profile
-                    this.isMyProfile = this._authService.getStudent().id === this.studentId;
+                    this.isMyProfile = this._authService.getStudent()?.id === this.studentId;
                 }
             });
 

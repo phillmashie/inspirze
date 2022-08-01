@@ -157,12 +157,12 @@ import { throwError } from 'rxjs';
 @Injectable()
 export class CoursesService {
 
-    private _courseBaseURL = '/api/courses';
+    private _courseBaseURL: string = '/api/courses';
 
     constructor(private _http: HttpClient) { }
 
     listCourses(): Observable<any> {
-        return this._http.get(this._courseBaseURL);
+        return this._http.get<any>(this._courseBaseURL);
 
     }
 
@@ -172,7 +172,7 @@ export class CoursesService {
     }
 
     deleteCourse(id: string): Observable<any> {
-        return this._http.delete(this._courseBaseURL + '/' + id);
+        return this._http.delete<any>(this._courseBaseURL + '/' + id);
 
     }
 
@@ -186,16 +186,16 @@ export class CoursesService {
     }
 
     getCourse(id: string): Observable<any> {
-        return this._http.get(this._courseBaseURL + '/' + id);
+        return this._http.get<any>(this._courseBaseURL + '/' + id);
 
     }
 
-    updateCourse(id: string, course: Course): Observable<any> {
-        return this._http.put(this._courseBaseURL + '/' + id, course);
+    updateCourse(id: String, course: Course): Observable<any> {
+        return this._http.put<any>(this._courseBaseURL + '/' + id, course);
 
     }
 
-    getNotEnrolledStudents(courseId: String) {
+    getNotEnrolledStudents(courseId: String): Observable<any>{
         return this._http.get<any>(this._courseBaseURL + '/getNotEnrolledStudents/' + courseId);
 
     }

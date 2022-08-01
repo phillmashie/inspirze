@@ -199,7 +199,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
       this.courseService
         .createCourse(formValue)
         .subscribe(course => {
-          this.notificationService.showSuccess('Course successfully created');
+          this.notificationService.showSuccess(`Course (${course.courseCode}) successfully created`);
           this.router.navigate(['/courses/details'],
            { queryParams: { 'id': course.id } }
          );

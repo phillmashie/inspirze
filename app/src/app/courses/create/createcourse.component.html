@@ -46,12 +46,31 @@
           Subtitle is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-
-      <mat-form-field class="quill-material-container">
-        <quill-material
+      <!-- <div id="froala-editor" >
+        
+       
+          <app-floalaeditor
           formControlName="description"
           placeholder="Description"
 
+        ></app-floalaeditor>
+          <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
+            Description is <strong>required</strong>
+          </mat-error>
+        
+      </div> -->
+
+      <mat-form-field class="quill-material-container">
+        <!-- <app-floalaeditor
+          formControlName="description"
+          placeholder="Description"
+
+        ></app-floalaeditor> -->
+        <quill-material
+
+          formControlName="description"
+          placeholder="Description"
+          
         ></quill-material>
         <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
           Description is <strong>required</strong>

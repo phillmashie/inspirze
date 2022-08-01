@@ -40,13 +40,13 @@ export class CourseDetailComponent implements OnInit {
 
     this._coursesService
       .getCourse(this.courseId)
-      .subscribe((res) => {
+      .subscribe( res => {
         this.course = res;
         this.isAdminView = this._authService.isAdmin();
-        if (this.course.students.length > 0) {
+        if (this.course?.students.length > 0) {
           this.hasStudents = true;
           this.isEnrolled = this._isCurrentStudentEnrolledInThisCourse();
-        }
+        };
       });
   }
 
@@ -58,11 +58,11 @@ export class CourseDetailComponent implements OnInit {
     this._studentsService
       // admin ? use arg : use authenticated student's id
       .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent.id })
-      .subscribe((res) => {
+      .subscribe(res => {
         this._alertService.success(`Student (#${studentNumber ? studentNumber : this.currentStudent.studentNumber}) has successfully registered in this course (${this.course.courseCode})!`, false);
         this.ngOnInit();
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
   }
 
   // can't do this because typescript doesn't let me overload...
@@ -73,12 +73,12 @@ export class CourseDetailComponent implements OnInit {
   dropCourse() {
     this._studentsService
       .dropCourse({ courseId: this.courseId, studentId: this.currentStudent.id })
-      .subscribe(res => {
+      .subscribe( res  => {
         this._alertService.success(`Student (#${this.currentStudent.studentNumber}) has successfully dropped this course (${this.course.courseCode})!`, true);
         this.ngOnInit();
         window.location.reload();
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
   }
 
   dropStudent(studentId: String, studentNumber: Number) {
@@ -88,18 +88,18 @@ export class CourseDetailComponent implements OnInit {
         this._alertService.success(`Student (#${studentNumber}) has successfully dropped this course (${this.course.courseCode})!`, true);
         this.ngOnInit();
         window.location.reload();
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
   }
 
   getNotEnrolledStudents() {
     this._coursesService
       .getNotEnrolledStudents(this.courseId)
-      .subscribe(res => {
+      .subscribe( res  => {
         this.showNotEnrolledStudents = true;
         this.notEnrolledStudents = res;
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
   }
 
   // helper methods

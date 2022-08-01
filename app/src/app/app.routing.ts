@@ -29,7 +29,7 @@ const appRoutes: Routes = [
             { path: '', component: ListComponent },
             // only admins can create new students
             { path: 'create', component: CreateComponent, canActivate: [RoleGuard] },
-            // 2018.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
+            // 2022.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
             { path: 'update', component: UpdateComponent, canActivate: [PersonalGuard] },
             { path: 'details', component: DetailsComponent },
         ],
@@ -37,11 +37,11 @@ const appRoutes: Routes = [
     {
         path: 'courses',
         component: CoursesComponent,
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', component: ListCoursesComponent },
-            { path: 'create', component: CreateCourseComponent,  },
-            { path: 'update', component: UpdateCourseComponent,  },
+            { path: 'create', component: CreateCourseComponent, canActivate: [RoleGuard] },
+            { path: 'update', component: UpdateCourseComponent, canActivate: [RoleGuard] },
             { path: 'details', component: CourseDetailComponent },
         ]
   },

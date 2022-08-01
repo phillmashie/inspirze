@@ -30,13 +30,15 @@ export class UpdateCourseComponent implements OnInit {
   update() {
     this._courseService
       .updateCourse(this.course.id, this.course)
-      .subscribe(updatedCourse => {
+      .subscribe(({ updatedCourse }: any) => {
         this._alertService.success(`Course (${updatedCourse.courseCode}) successfully updated`, true);
         this._router.navigate(['/courses/details'],
           { queryParams: { 'id': updatedCourse._id } }
         );
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
+
+     
   }
 
 }

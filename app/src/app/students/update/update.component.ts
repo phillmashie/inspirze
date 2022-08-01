@@ -29,13 +29,13 @@ export class UpdateComponent implements OnInit {
   update() {
     this._studentService
       .updateStudent(this.studentId, this.student)
-      .subscribe(updatedStudent => {
-        this._alertService.success(`Student (#${updatedStudent.studentNumber}) successfully updated`, true);
+      .subscribe(updatedStudent  => {
+        this._alertService.success(`Student (#${updatedStudent?.studentNumber}) successfully updated`, true);
         this._router.navigate(['/students/details'],
-          { queryParams: { 'id': updatedStudent._id } }
+          { queryParams: { 'id': updatedStudent?._id } }
         );
-      },
-        error => this._alertService.error(error));
+        error => this._alertService.error(error);
+      });
 
   }
 }

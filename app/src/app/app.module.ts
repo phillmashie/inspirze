@@ -20,6 +20,7 @@ import { PersonalGuard } from './authentication/personal.guard';
 
 import { QuillModule } from 'ngx-quill';
 import { MaterialModule } from './shared/material/material.module';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 import { DragDropVideoUploadDirective } from './shared/ui/drag-drop-video-upload/drag-drop-video-upload.directive';
 import { DragDropVideoUploadComponent } from './shared/ui/drag-drop-video-upload/drag-drop-video-upload.component';
@@ -38,6 +39,8 @@ import { UpdateCourseComponent } from './courses/update-course/update-course.com
 import { QuillMaterialComponent } from './shared/quill-material/quill-material.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FloalaeditorComponent } from './shared/ui/froala/floalaeditor.component';
+import 'froala-editor/js/plugins.pkgd.min.js';
 
 
 
@@ -58,9 +61,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     DragDropVideoUploadComponent,
     DragDropVideoUploadDirective,
     QuillMaterialComponent,
-
-
-
+    FloalaeditorComponent
 
 
   ],
@@ -81,7 +82,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     FlexLayoutModule,
     QuillModule.forRoot(),
-
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
 
   ],
   providers: [

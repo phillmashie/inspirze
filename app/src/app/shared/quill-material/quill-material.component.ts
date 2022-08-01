@@ -8,7 +8,10 @@ import {
   OnDestroy,
   Injector,
   DoCheck,
-  HostBinding
+  HostBinding,
+  HostListener,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -17,6 +20,7 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import Quill from 'quill';
 import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+declare var $: any;
 
 const SELECTOR = 'quill-material';
 
@@ -39,6 +43,7 @@ const SELECTOR = 'quill-material';
   }
 })
 export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, ControlValueAccessor, MatFormFieldControl<any> {
+  public content:any;
   static nextId = 0;
   @HostBinding() id = `quill-material-${QuillMaterialComponent.nextId++}`;
 
@@ -77,7 +82,7 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
         ['clean'],                                         // remove formatting button
 
         ['link', 'image', 'video'],                         // link and image, video
-        ['emoji']
+        
       ]
     }
   };
@@ -118,6 +123,7 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
   get disabled() {
     return this._disabled;
   }
+  @Output() contentanswer = new EventEmitter();
   set disabled(disabled) {
     this._disabled = coerceBooleanProperty(disabled);
     this.stateChanges.next();
@@ -137,6 +143,7 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
     return this.focused || !this.empty;
   }
 
+  
   @HostBinding('attr.aria-describedby') describedBy = '';
   setDescribedByIds(ids: string[]) {
     this.describedBy = ids.join(' ');
@@ -165,6 +172,7 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
         this.onChange(this.getValue());
       }
     });
+    
   }
 
   ngDoCheck(): void {

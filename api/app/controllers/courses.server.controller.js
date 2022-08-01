@@ -3,7 +3,7 @@
  * @file        courses.server.controller.js
  * @description this controller handles the CRUD operations for a Course Entity
  * @author      Phillip Mashingaidze
- * @date        2022.06.29
+ * @date        2022.07.26 15:00PM
  * 
  */
  const mongoose = require('mongoose');

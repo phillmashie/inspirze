@@ -17,6 +17,8 @@
           <mat-radio-group formControlName="type" required aria-label="Lecture type">
             <mat-radio-button value="video">Video</mat-radio-button>
             <mat-radio-button value="text">Text</mat-radio-button>
+            <mat-radio-button value="text">Quiz</mat-radio-button>
+            <mat-radio-button value="text">Tests</mat-radio-button>
           </mat-radio-group>
         </div>
 
@@ -42,6 +44,10 @@
 
 
             <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
+              <!-- <app-floalaeditor
+              formControlName="text"
+              placeholder="Lecture content"
+              ></app-floalaeditor> -->
               <quill-material
                 formControlName="text"
                 placeholder="Lecture content"

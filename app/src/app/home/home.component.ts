@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (!this._authService.isAdmin()) {
       this._router.navigate(['/students/details'],
-        { queryParams: { 'id': this._authService.getStudent().id } });
+        { queryParams: { 'id': this._authService.getStudent()?.id } });
     }
   }
 }

@@ -20,7 +20,8 @@
             "allowedCommonJsDependencies": [
               "quill-delta-to-html",
               "quill",
-              "lodash"
+              "lodash",
+              "froala-editor"
 
            ],
             "outputPath": "dist/app",
@@ -41,13 +42,15 @@
               "./node_modules/quill/dist/quill.core.css",
               "./node_modules/quill/dist/quill.bubble.css",
               "./node_modules/quill/dist/quill.snow.css",
-              "./node_modules/quill-emoji/dist/quill-emoji.css",
-              "./node_modules/quill-mention/dist/quill.mention.min.css"
+              "./node_modules/quill-mention/dist/quill.mention.min.css",
+              "./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+              "./node_modules/froala-editor/css/froala_style.min.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/quill/dist/quill.min.js"
+              "./node_modules/quill/dist/quill.min.js",
+              "./node_modules/froala-editor/js/froala_editor.pkgd.min.js"
             ]
           },
           "configurations": {

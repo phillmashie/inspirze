@@ -17,7 +17,7 @@ export class RoleGuard implements CanActivate {
     if (!this._authService.isAdmin()) {
       this._alertService.error('This page is only accessible by the system administrator', true);
       this._router.navigate(['/students/details'],
-        { queryParams: { 'id': this._authService.getStudent().id } });
+        { queryParams: { 'id': this._authService.getStudent()?.id } });
 
       // this._router.navigate(['/home']);
       return false;

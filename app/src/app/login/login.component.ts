@@ -11,6 +11,7 @@ import { AlertService } from '../alert/alert.service';
 })
 export class LoginComponent implements OnInit {
   // errorMessage: string;
+  loading = false;
   returnUrl: string;
   credentials: Credentials = {
     studentNumber: undefined,
@@ -29,18 +30,16 @@ export class LoginComponent implements OnInit {
     this._authService.logout();
 
     // get return url from route parameters or default to '/home'
-    //this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/home';
+    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   login() {
-
     this._authService.login(this.credentials)
-      .subscribe(({result}: any) => {
-        this._router.navigate([this._route.snapshot.queryParams['returnUrl'] || '/home']);
+      .subscribe(
+        result => this._router.navigate([this.returnUrl]),
         // result => this._router.navigate(['/home']),
         // error => console.log(`ive receive3d error! ${error}`));
-        error => this._alertService.error(error);
-      });
+        error => this._alertService.error(error));
     // this.errorMessage = error);
   }
 }

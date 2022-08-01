@@ -10,7 +10,7 @@ import { Student } from '../interfaces/student';
 export class AuthenticationService {
   // public student;
   private _baseURL = '/api/students';
-  private _student: Student | undefined;
+  private _student: Student;
 
   constructor(private _http: HttpClient) { 
     //this._student=this._student;
@@ -18,7 +18,7 @@ export class AuthenticationService {
 
   //this._student=this._student.bind(this);
 
-  isLoggedIn=(): boolean =>{
+  isLoggedIn(): boolean {
     // return this.student;
     //console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
     return sessionStorage.getItem('currentStudent') !== null;
@@ -26,7 +26,7 @@ export class AuthenticationService {
 
   isAdmin(): boolean {
     this._student = JSON.parse(sessionStorage.getItem('currentStudent'));
-    return this._student.role === 'admin';
+    return this._student?.role === 'admin';
   }
 
   getStudent(): Student {
