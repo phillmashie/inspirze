@@ -41,6 +41,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FloalaeditorComponent } from './shared/ui/froala/floalaeditor.component';
 import 'froala-editor/js/plugins.pkgd.min.js';
+import { NavComponent } from './shared/nav/nav.component';
+import { TopBarComponent } from './shared/top-bar/top-bar.component';
+import { LoaderComponent } from './shared/ui/loader/loader.component';
+import { QuizComponent } from './shared/ui/quiz/quiz.component';
+import { CountdownModule } from 'ngx-countdown';
 
 
 
@@ -61,9 +66,12 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     DragDropVideoUploadComponent,
     DragDropVideoUploadDirective,
     QuillMaterialComponent,
-    FloalaeditorComponent
-
-
+    FloalaeditorComponent,
+    NavComponent,
+    TopBarComponent,
+    LoaderComponent,
+    QuizComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -83,8 +91,8 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     FlexLayoutModule,
     QuillModule.forRoot(),
     FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
-
+    FroalaViewModule.forRoot(),
+    CountdownModule
   ],
   providers: [
     AuthGuard,
@@ -92,7 +100,8 @@ import 'froala-editor/js/plugins.pkgd.min.js';
     PersonalGuard,
     AuthenticationService,
     AlertService,
-    CoursesService
+    CoursesService,
+    
   ],
   bootstrap: [AppComponent]
 })

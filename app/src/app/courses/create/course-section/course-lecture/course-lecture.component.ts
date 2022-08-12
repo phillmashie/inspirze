@@ -10,6 +10,9 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/co
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { CoursesService } from 'src/app/courses/courses.service';
 
+//QUIZ IMPORTS
+import { QuestionData } from '../../../../interfaces/question-data';
+import { QuestionService } from '../../../../shared/ui/quiz/quiz.service';
 
 @Component({
   selector: 'app-course-lecture',
@@ -17,6 +20,18 @@ import { CoursesService } from 'src/app/courses/courses.service';
   styleUrls: ['./course-lecture.component.sass']
 })
 export class CourseLectureComponent implements OnInit, OnDestroy {
+
+  isLoading = false;
+  questions: QuestionData[] = [];
+  private questionsSub: Subscription;
+
+  isTimeUp = false;
+  
+  answer = new Array(10).fill("0");
+  correctAnswer = new Array(10).fill(0);
+
+  marks = 0;
+
   changeVideoSubject: Subject<void> = new Subject<void>();
 
   @Input() lectureFormGroup: any = UntypedFormGroup;
@@ -37,7 +52,8 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   constructor(
     private courseService: CoursesService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public questionService: QuestionService
   ) { }
 
   ngOnInit() {

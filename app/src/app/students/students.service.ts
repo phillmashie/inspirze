@@ -66,16 +66,16 @@ export class StudentsService {
 
   }
 
-  getEnrolledCourses(studentId: String): Observable<any> {
+  getEnrolledCourses(studentId: String): Observable<any>  {
     return this._http
-      .get<any>(this._courseBaseURL + '/getEnrolled/' + studentId);
+      .get(this._courseBaseURL + '/getEnrolled/' + studentId);
       
 
   }
 
-  getAvailableCourses(studentId: String): Observable<any[]> {
+  getAvailableCourses(studentId: String): Observable<any> {
     return this._http
-      .get<any[]>(this._courseBaseURL + '/getAvailable/' + studentId);
+      .get(this._courseBaseURL + '/getAvailable/' + studentId);
       
 
   }

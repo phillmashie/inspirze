@@ -145,24 +145,29 @@
 // }
 //2022.07.07 11:50:30 Refactored
 import 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Course } from '../interfaces/course';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
+
 @Injectable()
 export class CoursesService {
 
     private _courseBaseURL: string = '/api/courses';
+  
+    
 
     constructor(private _http: HttpClient) { }
+  
 
     listCourses(): Observable<any> {
-        return this._http.get<any>(this._courseBaseURL);
+      return this._http
+      .get(this._courseBaseURL,);
 
     }
 
@@ -184,7 +189,7 @@ export class CoursesService {
     deleteLecture(id: string){
       return this._http.delete(this._courseBaseURL + '/' + id);
     }
-
+  
     getCourse(id: string): Observable<any> {
         return this._http.get<any>(this._courseBaseURL + '/' + id);
 

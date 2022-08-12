@@ -41,7 +41,7 @@ export class CourseDetailComponent implements OnInit {
     this._coursesService
       .getCourse(this.courseId)
       .subscribe( res => {
-        this.course = res;
+        this.course = res.course.slice();
         this.isAdminView = this._authService.isAdmin();
         if (this.course?.students.length > 0) {
           this.hasStudents = true;
@@ -57,7 +57,7 @@ export class CourseDetailComponent implements OnInit {
   enrollInCourse(studentId?: String, studentNumber?: Number) {
     this._studentsService
       // admin ? use arg : use authenticated student's id
-      .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent.id })
+      .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent?.id })
       .subscribe(res => {
         this._alertService.success(`Student (#${studentNumber ? studentNumber : this.currentStudent.studentNumber}) has successfully registered in this course (${this.course.courseCode})!`, false);
         this.ngOnInit();
@@ -72,7 +72,7 @@ export class CourseDetailComponent implements OnInit {
 
   dropCourse() {
     this._studentsService
-      .dropCourse({ courseId: this.courseId, studentId: this.currentStudent.id })
+      .dropCourse({ courseId: this.courseId, studentId: this.currentStudent?.id })
       .subscribe( res  => {
         this._alertService.success(`Student (#${this.currentStudent.studentNumber}) has successfully dropped this course (${this.course.courseCode})!`, true);
         this.ngOnInit();

@@ -1,5 +1,6 @@
 import { Deserializable } from './deserializable';
 
+
 export class Lecture implements Deserializable {
   id?: string;
   title?: string;
@@ -7,6 +8,7 @@ export class Lecture implements Deserializable {
   videoUrl?: string;
   duration?: number;
   text?: string;
+ 
 
 
   deserialize(input: any) {

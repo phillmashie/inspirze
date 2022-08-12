@@ -24,7 +24,7 @@ export class UpdateCourseComponent implements OnInit {
   ngOnInit() {
     this._courseService
       .getCourse(this.course.id)
-      .subscribe(course => this.course = course);
+      .subscribe(course => this.course = course.course.slice());
   }
 
   update() {

@@ -76,6 +76,7 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
         type: ['video', Validators.required],
         videoUrl: null,
         text: null,
+        quiz: null,
         isFree: false
       })
     );
@@ -86,4 +87,5 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
     moveItemInArray(this.sectionFormGroup.controls.lectures.value, event.previousIndex, event.currentIndex);
     this.courseFormGroup.updateValueAndValidity();
   }
+  
 }

@@ -62,7 +62,14 @@
         text: {
             type: String,
             required: () => this.type === 'text'
-        }
+        },
+        Questions: [
+          {
+              type: mongoose.Schema.ObjectId,
+              ref: 'Questions',
+              required: true
+          }
+      ]
         }],
       }],   
      students: [
@@ -71,6 +78,8 @@
              ref: 'Students'
          }
      ]
- });
+ },
+ { timestamps: true }
+ );
  
  module.exports = mongoose.model('Courses', coursesSchema);

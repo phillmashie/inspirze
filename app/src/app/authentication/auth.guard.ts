@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     _next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._authService.isLoggedIn()) {
+    if (!this._authService.isLoggedIn()) {
       // if not logged in, redirect to login page with the return url
       // console.log(`inside authguard`);
       this._alertService.error('You need to login to see this page', true);

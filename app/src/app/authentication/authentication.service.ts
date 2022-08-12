@@ -21,7 +21,7 @@ export class AuthenticationService {
   isLoggedIn(): boolean {
     // return this.student;
     //console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
-    return sessionStorage.getItem('currentStudent') !== null;
+    return sessionStorage?.getItem('currentStudent') !== null;
   }
 
   isAdmin(): boolean {

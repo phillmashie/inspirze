@@ -32,9 +32,9 @@ export class ListCoursesComponent implements OnInit {
     this.isAdmin = this._authService.isAdmin();
 
     // enrolled courses only for student display
-    if (!this.isAdmin) {
+    if (this.isAdmin) {
       // if (!this._authService.isAdmin()) {
-      this._studentService?.getEnrolledCourses(this.currentStudentId)
+      this._studentService.getEnrolledCourses(this.currentStudentId)
         .subscribe(c => {
           this.enrolledCourses = c;
    
@@ -43,12 +43,12 @@ export class ListCoursesComponent implements OnInit {
     }
 
     // avail courses received for both student and admin display
-    this._studentService?.getAvailableCourses(this.currentStudentId)
+    this._studentService.getAvailableCourses(this.currentStudentId)
       .subscribe(c => {
         this.availableCourses = c;
-
         error => this._alertService.error(error);
       });
+  
   }
 
   deleteCourse(id: any, code: String) {

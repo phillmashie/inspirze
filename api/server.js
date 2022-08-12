@@ -15,6 +15,7 @@ const config = require('./config/config');
 const db = require('./config/mongoose');
 const app = require('./config/express');
 //  2022.06.29 - 00:15:29 added Passport
+
 const passport = require('./config/passport');
 
 app.listen(config.port);
