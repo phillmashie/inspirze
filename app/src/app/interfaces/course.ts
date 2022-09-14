@@ -21,7 +21,6 @@ export class Course implements Deserializable {
   title?: string;
   subtitle?: string;
   description?: string;
-  //imageUrl: string;
   rating?: number;
   sections?: Section[];
   students?: Student[];
@@ -29,7 +28,7 @@ export class Course implements Deserializable {
   deserialize(input: any) {
     Object.assign(this, input);
     this.id = input._id;
-    this.sections = input.sections ? input.sections.map(section => new Section().deserialize(section)) : new Section();
+    this.sections = input.sections ? input.sections.map((section: any) => new Section().deserialize(section)) : new Section();
     return this;
   }
 }

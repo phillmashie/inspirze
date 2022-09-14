@@ -6,11 +6,12 @@ import { Injectable } from '@angular/core';
 import { Student } from '../interfaces/student';
 import { CourseRegistration } from '../interfaces/course-registration';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class StudentsService {
-  private _baseURL = '/api/students';
-  private _courseBaseURL = '/api/courses';
+  private _baseURL = environment.backendURL +'api/students';
+  private _courseBaseURL = environment.backendURL + 'api/courses';
 
   constructor(private _http: HttpClient) { }
 

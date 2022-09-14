@@ -1,6 +1,8 @@
-import { Subscription } from "rxjs";
-import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from "@angular/core";
+import { Subject, Subscription } from "rxjs";
+import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, HostBinding, Injector } from "@angular/core";
 import FroalaEditor from "froala-editor";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
+import { FocusMonitor } from "@angular/cdk/a11y";
 declare var $: any;
 // declare var FroalaEditor: any;
 
@@ -14,7 +16,7 @@ declare var $: any;
 export class FloalaeditorComponent implements OnInit, OnDestroy  {
   public visible = false;
   public visibleAnimate = false;
-  
+  static nextId = 0;
 
 private subscriptions: Subscription[] = [];
 
@@ -25,14 +27,35 @@ public options: Object;
 @Input() hidebutton: boolean;
 @Input() componentid: string;
 
-@Output() contentanswer = new EventEmitter();
-
+@HostBinding() id = `app-floalaeditor-${FloalaeditorComponent.nextId++}`;
 @ViewChild('container', { read: ElementRef, static: true }) container: ElementRef;
 
+@Output() contentanswer = new EventEmitter();
 
-  constructor() { }
+stateChanges = new Subject<void>();
 
+FroalaEditor: any = FroalaEditor;
+editor: any;
+controlType = 'app-floalaeditor';
+errorState = false;
+ngControl: any;
+touched = false;
+focused = false;
+
+
+  constructor(public elRef: ElementRef, public injector: Injector, public fm: FocusMonitor) {
+    fm.monitor(elRef.nativeElement, true).subscribe(origin => {
+      this.focused = !!origin;
+      this.stateChanges.next();
+    });
+  }
   ngOnInit(): void {
+    // avoid Cyclic Dependency
+    this.ngControl = this.injector.get(NgControl);
+    if (this.ngControl != null) { this.ngControl.valueAccessor = this; }
+
+    const editorRef = this.container.nativeElement.querySelector('.editor');
+    const options = this.options || this.options;
     FroalaEditor.DefineIcon("insert_template", { NAME: "plus", SVG_KEY: "add" });
     FroalaEditor.RegisterCommand("insert_template", {
     title: "Insert Template Content",
@@ -54,6 +77,12 @@ public options: Object;
     this.options = {
       quickInsertEnabled: false,
       attribution: false,
+      // videoUploadToS3: s3tokenkey,
+      // imageUploadToS3: s3tokenkey,
+      // fileUploadToS3: s3tokenkey,
+      imageUploadURL: "https://pav.compute.inspirze.com/api/s3froalaimage",
+      videoUploadURL: "https://pav.compute.inspirze.com/api/s3froalavideo",
+      fileUploadURL: "https://pav.compute.inspirze.com/api/s3froalafile",
       charCounterCount: true,
       toolbarButtons: {
       // Key represents the more button from the toolbar.

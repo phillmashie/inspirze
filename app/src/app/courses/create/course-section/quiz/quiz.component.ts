@@ -1,4 +1,4 @@
-import { Lecture } from './../../../../interfaces/lecture';
+import { Question } from './../../../../interfaces/question';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormArray, ValidationErrors, FormArray, FormGroup } from '@angular/forms';
 
@@ -10,27 +10,23 @@ import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/co
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { CoursesService } from 'src/app/courses/courses.service';
 
-//QUIZ IMPORTS
-
-
-
 @Component({
-  selector: 'app-course-lecture',
-  templateUrl: './course-lecture.component.html',
-  styleUrls: ['./course-lecture.component.sass']
+  selector: 'app-quiz',
+  templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.css']
 })
-export class CourseLectureComponent implements OnInit, OnDestroy {
+export class QuizComponent implements OnInit {
 
-  @Input() lectureFormGroup: FormGroup;
+  @Input() questionFormGroup: FormGroup;
   @Input() sectionFormGroup: FormGroup;
   @Input() courseFormGroup: FormGroup;
-  @Input() lectureIndex: number;
+  @Input() questionIndex: number;
 
   formChangesSubscription: Subscription;
 
   progress = 0;
   successMsg = '';
-  lecture: Lecture;
+  question: Question;
   sectionId: string;
   courseId: string;
 
@@ -41,7 +37,7 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.lecture = new Lecture().deserialize(this.lectureFormGroup.value);
+    this.question = new Question().deserialize(this.questionFormGroup.value);
     this.sectionId = this.sectionFormGroup.get('id').value;
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
@@ -52,13 +48,13 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   }
 
   subcribeToFormChanges() {
-    const formValueChanges$ = this.lectureFormGroup.valueChanges;
-    return formValueChanges$.subscribe(formValue => { this.lecture = new Lecture().deserialize(formValue); this.getFormValidationErrors()});
+    const formValueChanges$ = this.questionFormGroup.valueChanges;
+    return formValueChanges$.subscribe(formValue => { this.question = new Question().deserialize(formValue); this.getFormValidationErrors()});
   }
 
   getFormValidationErrors() {
     // tslint:disable-next-line: forin
-    for (const control in this.lectureFormGroup.controls) {
+    for (const control in this.questionFormGroup.controls) {
       console.log(control)
       if (this.courseFormGroup.get(control)) {
         const controlErrors: ValidationErrors = this.courseFormGroup.get(control).errors;
@@ -72,7 +68,7 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
 
   }
 
-  onRemoveLecture(lectureIndex: number) {
+  onRemoveQuestion(questionIndex: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
         'Confirm deletion',
@@ -84,14 +80,15 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.courseService
-          .deleteLecture(this.lecture.id)
+          .deleteQuestion(this.question.id)
           .subscribe(res => {
-            const control = this.sectionFormGroup.get('lectures') as FormArray;
-            control.removeAt(lectureIndex);
-            this.notificationService.showSuccess('Lecture successfully deleted');
+            const control = this.sectionFormGroup.get('questions') as FormArray;
+            control.removeAt(questionIndex);
+            this.notificationService.showSuccess('Question successfully deleted');
           });
 
       }
     });
   }
+
 }

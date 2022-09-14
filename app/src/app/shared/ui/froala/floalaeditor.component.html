@@ -1,9 +1,7 @@
-<div class="froala-material-container" #container>
-  <div [froalaEditor]="options" [froalaModel]="content" ></div>
+<div class="app-floalaeditor-container" #container>
+  <div [froalaEditor]="options" [froalaModel]="content" (froalaModelChange)="changeContent($event)"></div>
 
 </div>
-
-      
 
 
 <div id="selection_box" class="selectorBox">

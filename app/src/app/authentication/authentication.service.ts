@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 
 //import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Credentials } from '../interfaces/credentials';
 import { Student } from '../interfaces/student';
 
 @Injectable()
 export class AuthenticationService {
   // public student;
-  private _baseURL = '/api/students';
+  private _baseURL = environment.backendURL + 'api/students';
   private _student: Student;
 
   constructor(private _http: HttpClient) { 

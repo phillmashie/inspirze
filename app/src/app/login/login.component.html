@@ -1,31 +1,67 @@
-<h1>Login</h1>
-<!-- # is variable declaration in ng -->
-<form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && login()" novalidate>
-  <!-- Student Number -->
-  <div class=" form-group row">
-    <div class="col-4 text-right ">
-      <label>Student Number:</label>
-    </div>
-    <div class="col-md-5 ">
-      <input type="number" class="form-control " required [(ngModel)]="credentials.studentNumber" name="studentNumber">
-      <div class="invalid-feedback text-left">Student Number is required!</div>
+<!-- <div class="container py-5">
+  <div class="row justify-content-right">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+      <mat-card> 
+        <h1>Login</h1>
+        <form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && login()" novalidate>
+          <mat-form-field>
+            <div class="col-md-5 ">
+              <input type="number" class="form-control " required [(ngModel)]="credentials.studentNumber" name="studentNumber">
+              <div class="invalid-feedback text-left">Student Number is required!</div>
+            </div>
+          </mat-form-field>
+          <mat-form-field>
+            <div class="col-md-5">
+              <input type="password" class="form-control " required [(ngModel)]="credentials.password" name="password" />
+              <div class="invalid-feedback text-left">Password is required!</div>
+            </div>
+          </mat-form-field>
+          <button mat-flat-button type="submit" color="primary">
+            <i class="fa fa-check-square-o "></i> Login
+          </button>
+        </form>
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate" color="warn"></mat-progress-bar>
+      </mat-card>
+    </div> 
+  </div>
+</div> -->
+
+<div class="containerr">
+  <div class="forms-container">
+    <div class="signin-signup">
+      <form #f='ngForm' [ngClass]="{'was-validated': f.submitted}" (ngSubmit)="f.form.valid && login()" novalidate class="sign-in-form">
+        <h2 class="title">Sign in</h2>
+        <div class="input-field">
+          <i class="fas fa-envelope"></i>
+          <input type="number" class="form-control " required [(ngModel)]="credentials.studentNumber" name="studentNumber">
+              <div class="invalid-feedback text-left">Student Number is required!</div>
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" class="form-control " required [(ngModel)]="credentials.password" name="password" />
+              <div class="invalid-feedback text-left">Password is required!</div>
+        </div>
+        <button mat-flat-button type="submit" color="primary">
+          <i class="fa fa-check-square-o "></i> Login
+        </button>
+        <p class="social-text" style="font-weight: bold;"><a [routerLink]="['/reset']" >Forgot password?</a></p>
+        <p class="social-text" style="color: red;font-weight: bold;font-size: 20px;"></p>
+
+      </form>
     </div>
   </div>
 
-  <!-- Password -->
-  <div class="form-group row">
-    <div class="col-4 text-right ">
-      <label>Password:</label>
+  <div class="panel right-panel">
+    <div class="content">
+      <h3>One of us ?</h3>
+      <p>
+        In life, the classroom is everywhere. The exam comes at the very end.
+      </p>
+      <button class="btn transparent" id="sign-in-btn">
+        Login
+      </button>
     </div>
-    <div class="col-md-5">
-      <input type="password" class="form-control " required [(ngModel)]="credentials.password" name="password" />
-      <div class="invalid-feedback text-left">Password is required!</div>
-    </div>
+    <img src="../../../assets/img/r.svg" class="image" alt="" />
   </div>
-
-  <!-- Buttons -->
-  <button type="submit " class="btn btn-outline-success ">
-    <i class="fa fa-check-square-o "></i> Login
-  </button>
-
-</form>
+</div>

@@ -13,6 +13,7 @@
  
  // student object created from the Schema / model
  const Student = require('../models/students.server.model');
+ const Lecture = require('../models/lecture.server.model');
  const Course = require('../models/courses.server.model');
 
  const coursesController = require("../controllers/courses.server.controller");
@@ -27,15 +28,12 @@
      .delete((req, res, next) => coursesController.DeleteCourse(req, res, next));
  
  //  2022.06.29 - 16:45:53
- router.route('/getAvailable/:studentId')
+ router.route('/getAvailable/:courseId')
      .get((req, res, next) => coursesController.GetAvailableCourses(req, res, next));
  
  //  2022.06.29 - 16:13:02
  router.route('/getEnrolled/:studentId')
      .get((req, res, next) => coursesController.GetEnrolledCourses(req, res, next));
-
-
-
 
  
  //  2022.06.29 - 18:10:49

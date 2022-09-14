@@ -27,10 +27,6 @@
         type: String,
         required: true
       },
-      // imageUrl: {
-      //   type: String,
-      //   required: true
-      // },
       rating: {
         type: Number,
         required: false,
@@ -46,40 +42,26 @@
             type: String,
             required: true
         },
-        type: {
-            type: String,
-            enum: ['video', 'text'],
-            required: true
-        },
-        videoUrl: {
-            type: String,
-            required: () => this.type === 'video'
-        },
-        duration: {
-            type: String,
-            required: () => this.type === 'video'
-        },
+    
         text: {
             type: String,
             required: () => this.type === 'text'
-        },
-        Questions: [
-          {
-              type: mongoose.Schema.ObjectId,
-              ref: 'Questions',
-              required: true
-          }
-      ]
+        }
         }],
-      }],   
+        question: [{
+          type: mongoose.Schema.ObjectId,
+          ref: 'question'
+        }]
+
+      }],  
      students: [
          {
              type: mongoose.Schema.ObjectId,
              ref: 'Students'
          }
      ]
- },
- { timestamps: true }
+    },
+    { timestamps: true }
  );
  
  module.exports = mongoose.model('Courses', coursesSchema);

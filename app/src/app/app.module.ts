@@ -44,8 +44,9 @@ import 'froala-editor/js/plugins.pkgd.min.js';
 import { NavComponent } from './shared/nav/nav.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { LoaderComponent } from './shared/ui/loader/loader.component';
-import { QuizComponent } from './shared/ui/quiz/quiz.component';
 import { CountdownModule } from 'ngx-countdown';
+import { QuizComponent } from './courses/create/course-section/quiz/quiz.component';
+
 
 
 
@@ -70,7 +71,9 @@ import { CountdownModule } from 'ngx-countdown';
     NavComponent,
     TopBarComponent,
     LoaderComponent,
-    QuizComponent
+    QuizComponent,
+ 
+ 
     
   ],
   imports: [

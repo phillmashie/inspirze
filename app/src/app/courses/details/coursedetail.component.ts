@@ -17,7 +17,7 @@ import { AlertService } from '../../alert/alert.service';
 export class CourseDetailComponent implements OnInit {
   courseId: string;
   currentStudent: Student;
-  course: Course;
+  course: any = Course;
   isAdminView: Boolean;
   hasStudents: Boolean;
 
@@ -40,7 +40,7 @@ export class CourseDetailComponent implements OnInit {
 
     this._coursesService
       .getCourse(this.courseId)
-      .subscribe( res => {
+      .subscribe( ({res} : any) => {
         this.course = res.course.slice();
         this.isAdminView = this._authService.isAdmin();
         if (this.course?.students.length > 0) {
@@ -95,7 +95,7 @@ export class CourseDetailComponent implements OnInit {
   getNotEnrolledStudents() {
     this._coursesService
       .getNotEnrolledStudents(this.courseId)
-      .subscribe( res  => {
+      .subscribe( ({ res} : any)  => {
         this.showNotEnrolledStudents = true;
         this.notEnrolledStudents = res;
         error => this._alertService.error(error);

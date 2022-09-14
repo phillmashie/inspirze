@@ -18,7 +18,8 @@ const app = require('./config/express');
 
 const passport = require('./config/passport');
 
-app.listen(config.port);
+app.listen(config.port, () => {
+    console.log(`Inspirze Server running at http://localhost:${config.port}/`);
+});
 module.exports = app;
 
-console.log(`Inspirze Server running at http://localhost:${config.port}/`);

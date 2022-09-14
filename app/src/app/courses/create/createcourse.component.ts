@@ -6,7 +6,7 @@
 import { AlertService } from '../../alert/alert.service';
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormArray, ValidationErrors } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormArray, ValidationErrors, FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import _ from 'lodash';
 import { NotificationService } from 'src/app/shared/services/notification.service';
@@ -57,15 +57,13 @@ import { Subscription } from 'rxjs';
 export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChecked {
   formChangesSubscription: Subscription;
   course: Course;
-  courseFormGroup!: UntypedFormGroup;
-  backendUrl: string = environment.backendURL;
+  courseFormGroup: FormGroup;
   editMode = false;
-  showImageInput = false;
   formValueHasChanged = false;
   private originalFormValue: any;
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private notificationService: NotificationService,
     private courseService: CoursesService,
@@ -74,16 +72,13 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     private changeDetector: ChangeDetectorRef
   ) { }
 
-  getFormGroupLectures(lectures: any): UntypedFormGroup[] {
+  getFormGroupLectures(lectures: any): FormGroup[] {
     if (!lectures || lectures.length === 0) {
       return [
         this.fb.group({
           id: null,
           title: [null, Validators.required],
-          type: ['video', Validators.required],
-          videoUrl: null,
           text: null,
-
         })
       ];
     }
@@ -92,25 +87,57 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     for (const lecture of lectures) {
       formGroup.push(
         this.fb.group({
-          id: lecture._id,
+          id: lecture.id,
           title: [lecture.title, Validators.required],
-          type: [lecture.type, Validators.required],
-          videoUrl: lecture.videoUrl,
           text: lecture.text,
-
         })
       );
     }
     return formGroup;
   }
 
-  getFormGroupSections(sections: any): UntypedFormGroup[] {
+  getFormGroupQuestions(questions: any): FormGroup[] {
+    if (!questions || questions.length === 0) {
+      return [
+        this.fb.group({
+          title: ['', Validators.required],
+          totalMarks: ['', Validators.required],
+          time: ['', Validators.required],
+          subject: ['', Validators.required],
+          questions: this.fb.array([this.init()]),
+        })
+      ];
+    }
+
+    const formGroup = [];
+    for (const question of questions) {
+      formGroup.push(
+        this.fb.group({
+          id: question.id,
+          mark: ['', Validators.required],
+          que: ['', Validators.required],
+          option1: ['', Validators.required],
+          option2: ['', Validators.required],
+          option3: ['', Validators.required],
+          option4: ['', Validators.required],
+          correctOption: ['', Validators.required]
+        })
+      );
+    }
+    return formGroup;
+  }
+   init(): any {
+     throw new Error('Method not implemented.');
+   }
+
+  getFormGroupSections(sections: any): FormGroup[] {
     if (!sections) {
       return [
         this.fb.group({
           id: null,
           title: [null, Validators.required],
-          lectures: this.fb.array(this.getFormGroupLectures(null))
+          lectures: this.fb.array(this.getFormGroupLectures(null)),
+          questions: this.fb.array(this.getFormGroupQuestions(null))
         })
       ];
     }
@@ -119,9 +146,10 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     for (const section of sections) {
       formGroup.push(
         this.fb.group({
-          id: section._id,
+          id: section.id,
           title: [section.title, Validators.required],
-          lectures: this.fb.array(this.getFormGroupLectures(section.lectures))
+          lectures: this.fb.array(this.getFormGroupLectures(section.lectures)),
+          questions: this.fb.array(this.getFormGroupQuestions(section.questions))
         })
       );
     }
@@ -129,18 +157,17 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     return formGroup;
   }
 
-  setForm(course?): UntypedFormGroup {
+  setForm(course?: any): FormGroup {
     if (!course) {
       course = {};
     }
 
     const formGroup = this.fb.group({
-      id: course._id,
+      id: course.id,
       courseCode: [course.courseCode, Validators.required],
       title: [course.title, Validators.required],
       subtitle: [course.subtitle, Validators.required],
       description: [course.description, Validators.required],
-      //image: [null, this.editMode ? null : Validators.required],TO DO
       sections: this.fb.array(this.getFormGroupSections(course.sections))
     });
 
@@ -199,28 +226,23 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
       this.courseService
         .createCourse(formValue)
         .subscribe(course => {
-          this.notificationService.showSuccess(`Course (${course.courseCode}) successfully created`);
-          this.router.navigate(['/courses/details'],
-           { queryParams: { 'id': course.id } }
-         );
-
+          this.notificationService.showSuccess('Course successfully created');
+          this.router.navigate(['courses']);
         });
     }
   }
 
   onAddSection() {
-    (this.courseFormGroup.get('sections') as UntypedFormArray).push(
+    (this.courseFormGroup.get('sections') as FormArray).push(
       this.fb.group({
         id: null,
         title: [null, Validators.required],
-        lectures: this.fb.array(this.getFormGroupLectures(null))
+        lectures: this.fb.array(this.getFormGroupLectures(null)),
+        questions: this.fb.array(this.getFormGroupQuestions(null)),
       })
     );
   }
 
-  onChangeImage() {
-    this.showImageInput = true;
-  }
 
   onBack() {
     if (!this.formValueHasChanged) {

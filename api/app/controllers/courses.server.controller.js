@@ -10,14 +10,17 @@
 
  // student object created from the Schema / model
  const Student = require('../models/students.server.model');
+ const Lecture = require('../models/lecture.server.model');
  const Course = require('../models/courses.server.model');
  
  // Course CRUD FUNCTIONS =======================================================
  
  // Get list of courses
  module.exports.GetCourses = function (req, res, next) {
-     Course.find((err, courses) => {
+    console.log("getting courses");
+     Course.find({},(err, courses) => {
          if (err) {
+            console.log(err);
              return res.status(400).send({
                  message: getErrorMessage(err)
              });
@@ -34,6 +37,7 @@
      console.log(course);
      course.save(err => {
          if (err) {
+            console.log(err);
              return res.status(400).send({
                  message: getErrorMessage(err)
              });

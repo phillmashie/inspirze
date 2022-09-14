@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -11,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/core": "^14.2.2",
+    "@angular-devkit/schematics": "^14.2.2",
     "@angular-eslint/eslint-plugin": "14.0.2",
     "@angular-eslint/schematics": "14.0.2",
     "@angular/animations": "14.1.0",

@@ -157,27 +157,31 @@ import { throwError } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
-
-    private _courseBaseURL: string = '/api/courses';
+    private quizid: any;
+    private delete:any;
+    public avail: boolean = false;
+    public msg: string = "";
+    private _courseBaseURL: string = environment.backendURL + 'api/courses';
+    private headers = new HttpHeaders().set('Content-Type', 'application/json');
   
     
 
     constructor(private _http: HttpClient) { }
   
 
-    listCourses(): Observable<any> {
+   listCourses() {
       return this._http
       .get(this._courseBaseURL,);
 
     }
 
-    createCourse(course: Course): Observable<any> {
-        return this._http.post<any>(this._courseBaseURL, course);
+    createCourse(course: Course) {
+        return this._http.post(this._courseBaseURL, course);
 
     }
 
-    deleteCourse(id: string): Observable<any> {
-        return this._http.delete<any>(this._courseBaseURL + '/' + id);
+    deleteCourse(id: string) {
+        return this._http.delete(this._courseBaseURL + '/' + id);
 
     }
 
@@ -189,46 +193,27 @@ export class CoursesService {
     deleteLecture(id: string){
       return this._http.delete(this._courseBaseURL + '/' + id);
     }
+
+    deleteQuestion(id: string): Observable<any>{
+      return this._http.delete(this._courseBaseURL + '/' + id);
+    }
   
-    getCourse(id: string): Observable<any> {
-        return this._http.get<any>(this._courseBaseURL + '/' + id);
+    getCourse(id: any) {
+        return this._http.get(this._courseBaseURL + '/' + id);
 
     }
 
-    updateCourse(id: String, course: Course): Observable<any> {
-        return this._http.put<any>(this._courseBaseURL + '/' + id, course);
+    updateCourse(id: string, course: Course) {
+        return this._http.put(this._courseBaseURL + '/' + id, course);
 
     }
 
-    getNotEnrolledStudents(courseId: String): Observable<any>{
-        return this._http.get<any>(this._courseBaseURL + '/getNotEnrolledStudents/' + courseId);
+    getNotEnrolledStudents(courseId: String) {
+        return this._http.get(this._courseBaseURL + '/getNotEnrolledStudents/' + courseId);
 
     }
-    uploadVideoLecture(video: File, lectureId: string, sectionId: string, courseId: string) {
-      const formData = new FormData();
-      formData.append('lectureId', lectureId);
-      formData.append('sectionId', sectionId);
-      formData.append('courseId', courseId);
-      formData.append('video', video);
 
-      return this._http.post(environment.backendURL + 'uploadVideoLecture', formData, {
-        reportProgress: true,
-        observe: 'events'
-      }).pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-          if (error.error instanceof ErrorEvent) {
-            // Get client-side error
-            errorMessage = error.error.message;
-          } else {
-            // Get server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-          }
-          console.log(errorMessage);
-          return throwError(errorMessage);
-        })
-      );
-  }
+    
 }
 
 

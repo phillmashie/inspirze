@@ -11,6 +11,7 @@ import { AlertService } from '../alert/alert.service';
 })
 export class LoginComponent implements OnInit {
   // errorMessage: string;
+  isLoading = false;
   loading = false;
   returnUrl: string;
   credentials: Credentials = {
