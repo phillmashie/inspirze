@@ -227,7 +227,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
         .createCourse(formValue)
         .subscribe(course => {
           this.notificationService.showSuccess('Course successfully created');
-          this.router.navigate(['courses']);
+          this.router.navigate(['/courses/details']);
         });
     }
   }
