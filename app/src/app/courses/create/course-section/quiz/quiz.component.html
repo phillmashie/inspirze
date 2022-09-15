@@ -7,7 +7,7 @@
   
         <div class="d-flex justify-content-between mb-2">
           <div class="d-flex align-items-center">
-            <label class="mr-3">Lecture content</label>
+            <label class="mr-3">Quiz Questions</label>
             <!-- <mat-radio-group formControlName="type" required aria-label="Lecture type">
               <mat-radio-button value="video">Video</mat-radio-button>
               <mat-radio-button value="text">Text</mat-radio-button>
@@ -23,26 +23,34 @@
           <div class="d-flex flex-column flex-grow-1">
             <div>
               <mat-form-field>
-                <input
-                  matInput
-                  placeholder="Lecture title"
-                  formControlName="title"
-                  required
-                >
-                <mat-error *ngIf="questionFormGroup.get('title').hasError('required')">
-                  Lecture title is <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-  
-              <mat-form-field class="quill-material-container">
-                <quill-material
-                  formControlName="text"
-                  placeholder="Question content"
-                  [required]
-                ></quill-material>
-                <mat-error *ngIf="questionFormGroup.get('text').hasError('required')">
-                  Question content is <strong>required</strong>
-                </mat-error>
+                <div class="container py-5">
+                  <div class="col-md-12">
+                    <form>
+                      <div>
+                        <div class="question">
+                          <h2>{{ question.question }}</h2>
+                        </div>
+                        <mat-radio-group >
+                          <ul>
+                            <li>
+                              <h4><mat-radio-button value="1">{{ question.option1 }}</mat-radio-button></h4>
+                            </li>
+                            <li>
+                              <h4><mat-radio-button  value="2">{{ question.option2 }}</mat-radio-button></h4>
+                            </li>
+                            <li>
+                              <h4><mat-radio-button value="3">{{ question.option3 }}</mat-radio-button></h4>
+                            </li>
+                            <li>
+                              <h4><mat-radio-button  value="4">{{ question.option4 }}</mat-radio-button></h4>
+                            </li>
+                          </ul>
+                        </mat-radio-group>
+                      </div>
+                      <!-- <button mat-stroked-button type="submit" (click)="onSubmit()" style="width: 100%; text-align: center; font-size: 30px;" color="accent">SUBMIT</button> -->
+                    </form>
+                  </div>
+                </div>
               </mat-form-field>
   
             </div>

@@ -100,11 +100,9 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     if (!questions || questions.length === 0) {
       return [
         this.fb.group({
-          title: ['', Validators.required],
-          totalMarks: ['', Validators.required],
-          time: ['', Validators.required],
-          subject: ['', Validators.required],
-          questions: this.fb.array([this.init()]),
+          id: null,
+          title: [null, Validators.required],
+          text: null,
         })
       ];
     }
@@ -114,21 +112,13 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
       formGroup.push(
         this.fb.group({
           id: question.id,
-          mark: ['', Validators.required],
-          que: ['', Validators.required],
-          option1: ['', Validators.required],
-          option2: ['', Validators.required],
-          option3: ['', Validators.required],
-          option4: ['', Validators.required],
-          correctOption: ['', Validators.required]
+          title: [question.title, Validators.required],
+          text: question.text,
         })
       );
     }
     return formGroup;
   }
-   init(): any {
-     throw new Error('Method not implemented.');
-   }
 
   getFormGroupSections(sections: any): FormGroup[] {
     if (!sections) {
@@ -253,7 +243,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
           'Confirm action',
           'The course contains unsaved changes. Are you sure you want to go back?'
         ),
-        maxWidth: '400px'
+        maxWidth: '400px' 
       });
 
       dialogRef.afterClosed().subscribe(res => {
