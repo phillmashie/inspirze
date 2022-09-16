@@ -78,21 +78,21 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
     );
   }
 
-  onAddQuestion() {
-    (this.sectionFormGroup.get('questions') as FormArray).push(
-      this.fb.group({
-        id: null,
-        title: [null, Validators.required],
-        text: null,
-      })
-    );
-  }
+  // onAddQuestion() {
+  //   (this.sectionFormGroup.get('questions') as FormArray).push(
+  //     this.fb.group({
+  //       id: null,
+  //       title: [null, Validators.required],
+  //       text: null,
+  //     })
+  //   );
+  // }
 
   drop(event: CdkDragDrop<FormGroup[]>) {
     moveItemInArray(this.sectionFormGroup.get('lectures')['controls'], event.previousIndex, event.currentIndex);
     moveItemInArray(this.sectionFormGroup.controls['lectures'].value, event.previousIndex, event.currentIndex);
-    moveItemInArray(this.sectionFormGroup.get('questions')['controls'], event.previousIndex, event.currentIndex);
-    moveItemInArray(this.sectionFormGroup.controls['questions'].value, event.previousIndex, event.currentIndex);
+    // moveItemInArray(this.sectionFormGroup.get('questions')['controls'], event.previousIndex, event.currentIndex);
+    // moveItemInArray(this.sectionFormGroup.controls['questions'].value, event.previousIndex, event.currentIndex);
     this.courseFormGroup.updateValueAndValidity();
   }
   
