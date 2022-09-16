@@ -13,8 +13,8 @@
   "dependencies": {
     "@angular-devkit/core": "^14.2.2",
     "@angular-devkit/schematics": "^14.2.2",
-    "@angular-eslint/eslint-plugin": "14.0.2",
-    "@angular-eslint/schematics": "14.0.2",
+    "@angular-eslint/eslint-plugin": "14.0.4",
+    "@angular-eslint/schematics": "14.0.4",
     "@angular/animations": "14.1.0",
     "@angular/cdk": "14.1.0",
     "@angular/common": "14.1.0",
