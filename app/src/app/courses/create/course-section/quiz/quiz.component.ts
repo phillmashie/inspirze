@@ -30,6 +30,10 @@ export class QuizComponent implements OnInit {
   sectionId: string;
   courseId: string;
 
+  answer = new Array(10).fill("0");
+  correctAnswer = new Array(10).fill(0);
+i: any;
+
   constructor(
     private courseService: CoursesService,
     private notificationService: NotificationService,
