@@ -21,5 +21,5 @@ Course notes
 PWA
 To use:
 
-npm --prefix backend run dev
+npm --prefix api run dev
 open http://localhost:4200/
