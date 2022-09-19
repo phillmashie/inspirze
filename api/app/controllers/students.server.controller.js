@@ -152,7 +152,7 @@
              } else {
                  Course.findOneAndUpdate(
                      { _id: courseId },
-                     { $push: { students: s._id } },
+                     { $push: { students: s['_id'] } },
                      { new: true },
                      (err, c) => {
                          if (err) {

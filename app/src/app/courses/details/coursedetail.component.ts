@@ -40,7 +40,7 @@ export class CourseDetailComponent implements OnInit {
 
     this._coursesService
       .getCourse(this.courseId)
-      .subscribe( ({res} : any) => {
+      .subscribe( (res : any) => {
         this.course = res.course.slice();
         this.isAdminView = this._authService.isAdmin();
         if (this.course?.students.length > 0) {

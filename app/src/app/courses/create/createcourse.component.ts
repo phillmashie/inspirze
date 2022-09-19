@@ -101,8 +101,9 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
       return [
         this.fb.group({
           id: null,
-          title: [null, Validators.required],
-          text: null,
+          question: null,
+          options: this.fb.array(this.getFormGroupQuestions(null)),
+          answer: this.fb.array(this.getFormGroupQuestions(null))
         })
       ];
     }
@@ -112,8 +113,11 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
       formGroup.push(
         this.fb.group({
           id: question.id,
-          title: [question.title, Validators.required],
-          text: question.text,
+          // title: [question.title, Validators.required],
+          question: [question.question, Validators.required],
+          options: this.fb.array(this.getFormGroupLectures(question.options)),
+          // text: question.text,
+          answer: this.fb.array(this.getFormGroupLectures(question.answer)),
         })
       );
     }
