@@ -20,33 +20,32 @@ import { UpdateCourseComponent } from './courses/update-course/update-course.com
 const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent,  },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     {
         path: 'students',
         component: StudentsComponent,
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', component: ListComponent },
             // only admins can create new students
-            { path: 'create', component: CreateComponent,  },
-            // 2022.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
-            { path: 'update', component: UpdateComponent,  },
+            { path: 'create', component: CreateComponent, canActivate: [RoleGuard] },
+            // 2018.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
+            { path: 'update', component: UpdateComponent, canActivate: [PersonalGuard] },
             { path: 'details', component: DetailsComponent },
         ],
     },
     {
         path: 'courses',
         component: CoursesComponent,
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', component: ListCoursesComponent },
-            { path: 'create', component: CreateCourseComponent,  },
-            { path: 'update', component: UpdateCourseComponent,  },
+            { path: 'create', component: CreateCourseComponent, canActivate: [RoleGuard] },
+            { path: 'update', component: UpdateCourseComponent, canActivate: [RoleGuard] },
             { path: 'details', component: CourseDetailComponent },
         ]
-  },
-  // { path: 'profile', redirectTo: 'students/details' },
-  { path: '**', redirectTo: 'home' }
+    },
+    // { path: 'profile', redirectTo: 'students/details' },
+    { path: '**', redirectTo: 'home' }
 ];
-
 export const routing = RouterModule.forRoot(appRoutes);

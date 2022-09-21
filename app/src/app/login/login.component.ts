@@ -37,12 +37,10 @@ export class LoginComponent implements OnInit {
   login() {
     this._authService.login(this.credentials)
       .subscribe(
-        result => { 
-          this._router.navigate([this.returnUrl]),
+        () => this._router.navigate([this.returnUrl]),
         // result => this._router.navigate(['/home']),
         // error => console.log(`ive receive3d error! ${error}`));
-        error => this._alertService.error(error);
-      });
+        error => this._alertService.error(error));
     // this.errorMessage = error);
   }
 }

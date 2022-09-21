@@ -1,74 +1,48 @@
-<div [formGroup]="questionFormGroup">
-    <input type="hidden" formControlName="id"/>
-  
-  
-    <mat-card class="question-container mb-4">
-      <mat-card-content class="mb-0">
-  
-        <div class="d-flex justify-content-between mb-2">
-          <div class="d-flex align-items-center">
-            <label class="mr-3">Quiz Questions</label>
-            <!-- <mat-radio-group formControlName="type" required aria-label="Lecture type">
-              <mat-radio-button value="video">Video</mat-radio-button>
-              <mat-radio-button value="text">Text</mat-radio-button>
-            </mat-radio-group> -->
-          </div>
-  
-          <div *ngIf="sectionFormGroup.get('questions')['controls'].length > 1" class="drag-handle">
-            <ng-content></ng-content>
-          </div>
-        </div>
-  
-        <div class="d-flex flex-row p-1">
-          <div class="d-flex flex-column flex-grow-1">
-            <div>
-              <mat-form-field>
-                <div class="container py-5">
-                  <div class="col-md-12">
-                    <form>
-                      <div>
-                        <div class="question">
-                          <h2>{{ question.question }}</h2>
-                        </div>
-                        <mat-radio-group name="answer{{i}}" [(ngModel)]="answer[i]" >
-                          <ul>
-                            <li>
-                              <h4><mat-radio-button value="1">{{ question.options }}</mat-radio-button></h4>
-                            </li>
-                            <li>
-                              <h4><mat-radio-button  value="2">{{ question.options }}</mat-radio-button></h4>
-                            </li>
-                            <li>
-                              <h4><mat-radio-button value="3">{{ question.options }}</mat-radio-button></h4>
-                            </li>
-                            <li>
-                              <h4><mat-radio-button  value="4">{{ question.options }}</mat-radio-button></h4>
-                            </li>
-                          </ul>
-                        </mat-radio-group>
-                      </div>
-                      <!-- <button mat-stroked-button type="submit" (click)="onSubmit()" style="width: 100%; text-align: center; font-size: 30px;" color="accent">SUBMIT</button> -->
-                    </form>
-                  </div>
-                </div>
-              </mat-form-field>
-  
-            </div>
-          </div>
-  
-        </div>
-      </mat-card-content>
-      <mat-card-actions class="d-flex justify-content-end">
-        <div class="text-right">
-          <button
-            *ngIf="sectionFormGroup.get('lectures')['controls'].length > 1"
-            matTooltip="Remove lecture"
-            mat-icon-button
-            color="warn"
-            type="button"
-            (click)="onRemoveQuestion(questionIndex)"
-          ><mat-icon>delete_outline</mat-icon></button>
-        </div>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+
+<div class="container mt-5">
+  <form #f="ngForm" (ngSubmit)="addQuestion(f)">
+
+
+
+
+    <div class="form-group">
+      <label for="questionText">Question Text</label>
+      <input type="text" name="questionText" class="form-control" autocomplete="off" id="questionText" ngModel required
+        #questionText="ngModel">
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="optionA">Option1</label>
+      <input type="text" class="form-control" name="optionA" autocomplete="off" id="optionA" ngModel required #optionA="ngModel">
+    </div>
+
+    <div class="form-group">
+      <label for="optionB">Option2</label>
+      <input type="text" class="form-control" name="optionB"  autocomplete="off" id="optionB" ngModel required #optionB="ngModel">
+    </div>
+
+    <div class="form-group">
+      <label for="optionC">Option3</label>
+      <input type="text" class="form-control" name="optionC" autocomplete="off" id="optionC" ngModel required #optionC="ngModel">
+    </div>
+
+    <div class="form-group">
+      <label for="optionD">Option4</label>
+      <input type="text" class="form-control" name="optionD" autocomplete="off" id="optionD" ngModel required #optionD="ngModel">
+    </div>
+
+    <div class="form-group" style="margin-top: 10px;">
+      <label for="answer">Answer</label>
+      <input type="radio" value="1" name="answer" id="answer" ngModel required #answer="ngModel">1
+      <input type="radio" value="2" name="answer" id="answer" ngModel required #answer="ngModel">2
+      <input type="radio" value="3" name="answer" id="answer" ngModel required #answer="ngModel">3
+      <input type="radio" value="4" name="answer" id="answer" ngModel required #answer="ngModel">4
+    </div>
+
+
+    <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button>
+  </form>
+  <p class="social-text" style="color: red;font-weight: bold;font-size: 20px;" *ngIf="avail">{{msg}}</p>
+</div>

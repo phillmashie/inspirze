@@ -1,18 +1,13 @@
-import { Lecture } from './../../../../interfaces/lecture';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormArray, ValidationErrors, FormArray, FormGroup } from '@angular/forms';
-
+import { FormGroup, FormArray, ValidationErrors } from '@angular/forms';
+import { CoursesService } from '../../../courses.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Subject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { CoursesService } from 'src/app/courses/courses.service';
-
-//QUIZ IMPORTS
-
-
+import { Lecture } from '../../../../interfaces/lecture';
 
 @Component({
   selector: 'app-course-lecture',
@@ -20,6 +15,7 @@ import { CoursesService } from 'src/app/courses/courses.service';
   styleUrls: ['./course-lecture.component.sass']
 })
 export class CourseLectureComponent implements OnInit, OnDestroy {
+  changeVideoSubject: Subject<void> = new Subject<void>();
 
   @Input() lectureFormGroup: FormGroup;
   @Input() sectionFormGroup: FormGroup;
@@ -33,6 +29,8 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   lecture: Lecture;
   sectionId: string;
   courseId: string;
+
+  backendURL = environment.backendURL;
 
   constructor(
     private courseService: CoursesService,
@@ -70,7 +68,39 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
       }
     };
 
+
+
+    // for (const i in this.courseFormGroup.controls.sections['controls']) {
+    //   for (const control in this.courseFormGroup.controls.sections['controls'][i]['controls']) {
+    //     const controlErrors: ValidationErrors = this.courseFormGroup.controls.sections['controls'][i]['controls'][control].errors;
+    //     if (controlErrors != null) {
+    //       Object.keys(controlErrors).forEach(keyError => {
+    //         console.log('Key control: ' + control + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+    //       });
+    //     }
+    //   }
+    // }
   }
+
+  // onVideoSelected(videoFile: File) {
+  //   // Upload to server
+  //   this.courseService
+  //     .uploadVideoLecture(videoFile, this.lecture.id, this.sectionId, this.courseId)
+  //     .subscribe((event: HttpEvent<any>) => {
+  //       switch (event.type) {
+  //         case HttpEventType.UploadProgress:
+  //           this.progress = Math.round(event.loaded / event.total * 100);
+  //           break;
+  //         case HttpEventType.Response:
+  //           this.lectureFormGroup.get('videoUrl').setValue(event.body.filePath);
+  //           this.progress = 0;
+  //       }
+  //     });
+  // }
+
+  // onChangeVideo() {
+  //   this.changeVideoSubject.next();
+  // }
 
   onRemoveLecture(lectureIndex: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -94,4 +124,5 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
       }
     });
   }
+
 }

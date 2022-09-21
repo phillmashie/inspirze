@@ -2,10 +2,13 @@ import { Deserializable } from './deserializable';
 
 
 export class Lecture implements Deserializable {
-  id?: string;
-  title?: string;
-  type?: string;
-  text?: string;
+  id: string;
+  title: string;
+  type: string;
+  quiz: string;
+  duration: number;
+  text: string;
+
  
 
 

@@ -46,7 +46,7 @@
       Add lecture
     </button>
 
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
       <div
         *ngFor="let question of sectionFormGroup.get('questions')['controls']; let i = index;"
         cdkDrag
@@ -79,7 +79,7 @@
       >
         <mat-icon>add</mat-icon>
         Add Question
-      </button>
+      </button> -->
 
     <button
       *ngIf="courseFormGroup.get('sections')['controls'].length > 1"

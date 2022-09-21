@@ -22,12 +22,12 @@ export class AuthenticationService {
   isLoggedIn(): boolean {
     // return this.student;
     //console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
-    return sessionStorage?.getItem('currentStudent') !== null;
+    return sessionStorage.getItem('currentStudent') !== null;
   }
 
   isAdmin(): boolean {
     this._student = JSON.parse(sessionStorage.getItem('currentStudent'));
-    return this._student?.role === 'admin';
+    return this._student.role === 'admin';
   }
 
   getStudent(): Student {
@@ -37,8 +37,14 @@ export class AuthenticationService {
   login(credentials: Credentials): Observable<any> {
     // perform a request with 'post' http method
     return this._http
-      .post(this._baseURL + '/login', credentials);
+      .post<any>(this._baseURL + '/login', credentials)
       // .map(res => this.student = res.json())
+      .pipe(
+        map(res => {
+          sessionStorage.setItem('currentStudent', res.toString());
+        })
+      );
+      
       
       
   }

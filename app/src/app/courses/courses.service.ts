@@ -157,10 +157,10 @@ import { throwError } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
-    private quizid: any;
-    private delete:any;
-    public avail: boolean = false;
-    public msg: string = "";
+  private quizid: any;
+  private delete:any;
+  public avail: boolean = false;
+  public msg: string = "";
     private _courseBaseURL: string = environment.backendURL + 'api/courses';
     private headers = new HttpHeaders().set('Content-Type', 'application/json');
   
@@ -211,6 +211,17 @@ export class CoursesService {
     getNotEnrolledStudents(courseId: String) {
         return this._http.get(this._courseBaseURL + '/getNotEnrolledStudents/' + courseId);
 
+    }
+
+    addQuestion(body) {
+      return this._http.post(this._courseBaseURL + "teacher/addquestion", body, {
+        observe: 'body',
+        headers: new HttpHeaders().append('Content-Type', 'application/json')
+      });
+    }
+
+    getQuizId() {
+      return this.quizid;
     }
 
     
