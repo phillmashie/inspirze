@@ -1,15 +1,15 @@
-<div style="padding-top:25px; padding-bottom:45px">
+<div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
     <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': availableCourses?.length}">Create New Course</a>
 </div>
 
-<div *ngIf="!availableCourses?.length ">
+<div *ngIf="!availableCourses?.length && this._authService.isAdmin()">
     <p>
         There are currently no courses offered at Inspirze.
         <br> Please feel free to create a new course by clicking the button above :) !
     </p>
 </div>
 
-<div >
+<div  *ngIf='!this._authService.isAdmin()'>
     <h4>Currently Enrolled In:</h4>
 
     <p *ngIf='!enrolledCourses?.length'>

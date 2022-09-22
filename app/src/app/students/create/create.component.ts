@@ -17,10 +17,10 @@ export class CreateComponent {
     password: 'password',
     firstName: 'John',
     lastName: 'Doe',
-    address: '123 Example Street',
-    city: 'Toronto',
+    address: '26 Holt Example Street',
+    city: 'Sandton',
     phoneNumber: '416-123-4456',
-    email: 'jdoe@example.com',
+    email: 'jdoe@inspirze.com',
     program: 'Software Engineering Technology',
     courses: undefined
   };

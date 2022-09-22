@@ -34,7 +34,7 @@ export class ListCoursesComponent implements OnInit {
     this.isAdmin = this._authService.isAdmin();
 
     // enrolled courses only for student display
-    if (this.isAdmin) {
+    if (!this.isAdmin) {
       // if (!this._authService.isAdmin()) {
       this._studentService.getEnrolledCourses(this.currentStudentId)
         .subscribe(({ data }: any) => {

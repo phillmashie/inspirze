@@ -20,28 +20,26 @@ import { UpdateCourseComponent } from './courses/update-course/update-course.com
 const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'home', component: HomeComponent, },
     {
         path: 'students',
         component: StudentsComponent,
-        canActivate: [AuthGuard],
         children: [
             { path: '', component: ListComponent },
             // only admins can create new students
-            { path: 'create', component: CreateComponent, canActivate: [RoleGuard] },
-            // 2018.03.31 - 16:53:36 - students can only edit THEIR OWN profiles
-            { path: 'update', component: UpdateComponent, canActivate: [PersonalGuard] },
+            { path: 'create', component: CreateComponent },
+            // 2022.07.31 - 16:53:36 - students can only edit THEIR OWN profiles
+            { path: 'update', component: UpdateComponent },
             { path: 'details', component: DetailsComponent },
         ],
     },
     {
         path: 'courses',
         component: CoursesComponent,
-        canActivate: [AuthGuard],
         children: [
             { path: '', component: ListCoursesComponent },
-            { path: 'create', component: CreateCourseComponent, canActivate: [RoleGuard] },
-            { path: 'update', component: UpdateCourseComponent, canActivate: [RoleGuard] },
+            { path: 'create', component: CreateCourseComponent  },
+            { path: 'update', component: UpdateCourseComponent  },
             { path: 'details', component: CourseDetailComponent },
         ]
     },

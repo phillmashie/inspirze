@@ -27,7 +27,7 @@ export class AuthenticationService {
 
   isAdmin(): boolean {
     this._student = JSON.parse(sessionStorage.getItem('currentStudent'));
-    return this._student.role === 'admin';
+    return this._student?.role === 'admin';
   }
 
   getStudent(): Student {
@@ -38,9 +38,10 @@ export class AuthenticationService {
     // perform a request with 'post' http method
     return this._http
       .post<any>(this._baseURL + '/login', credentials)
+      
       // .map(res => this.student = res.json())
       .pipe(
-        map(res => {
+        map((res : string) => {
           sessionStorage.setItem('currentStudent', res.toString());
         })
       );

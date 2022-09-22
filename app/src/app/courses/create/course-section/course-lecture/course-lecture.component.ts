@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormArray, ValidationErrors, NgForm } from '@angular/forms';
 import { CoursesService } from '../../../courses.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Lecture } from '../../../../interfaces/lecture';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-lecture',
@@ -29,13 +30,20 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   lecture: Lecture;
   sectionId: string;
   courseId: string;
+//quiz component variables
+  msg: any = [];
+  avail: boolean;
+  quizid:any;
+  obj:any;
+  options:any[]= [];
 
   backendURL = environment.backendURL;
 
   constructor(
     private courseService: CoursesService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -43,6 +51,16 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
     this.sectionId = this.sectionFormGroup.get('id').value;
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
+
+    if(this.courseService.getQuizId()==undefined)
+    {
+      this.router.navigate(['/teacher/uploadquiz']);
+    }
+    else
+    {
+      this.quizid=this.courseService.getQuizId();
+
+    }
   }
 
   ngOnDestroy(): void {
@@ -52,6 +70,29 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   subcribeToFormChanges() {
     const formValueChanges$ = this.lectureFormGroup.valueChanges;
     return formValueChanges$.subscribe(formValue => { this.lecture = new Lecture().deserialize(formValue); this.getFormValidationErrors()});
+  }
+
+  addQuestion(f: NgForm)
+  {
+
+    this.options.push({optionValue: '1',optionText:f.controls['optionA'].value});
+    this.options.push({optionValue: '2',optionText:f.controls['optionB'].value});
+    this.options.push({optionValue: '3',optionText:f.controls['optionC'].value});
+    this.options.push({optionValue: '4',optionText:f.controls['optionD'].value});
+    // console.log(this.options);
+    this.obj = {quizid:this.quizid,options:this.options,questionText:f.controls['questionText'].value,answer:f.controls['answer'].value}
+    // console.log(this.obj);
+    this.courseService.addQuestion(this.obj)
+      .subscribe(
+        data => {
+          // console.log(data);
+          this.router.navigate(['/teacher/uploadquiz']);
+        },
+        error =>
+        {
+          this.router.navigate(['/error']);
+        }
+      )
   }
 
   getFormValidationErrors() {

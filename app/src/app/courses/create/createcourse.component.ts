@@ -1,8 +1,3 @@
-
-
-
-
-
 import { AlertService } from '../../alert/alert.service';
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
