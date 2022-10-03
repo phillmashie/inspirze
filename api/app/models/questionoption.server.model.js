@@ -21,4 +21,4 @@ const questionoptionSchema = new Schema({
 { timestamps: true }
 );
 
-module.exports = mongoose.model("Options", questionoptionSchema);
+module.exports = mongoose.model("QuestionOptions", questionoptionSchema);

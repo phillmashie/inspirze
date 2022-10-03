@@ -14,11 +14,11 @@ const questionSchema = new Schema({
 
     questionoption: [{
         type: mongoose.Schema.ObjectId,
-        ref: 'questionoption'
+        ref: 'QuestionOptions'
       }]
    
 },
 { timestamps: true }
 );
 
-module.exports = mongoose.model("Question", questionSchema);
+module.exports = mongoose.model("Questions", questionSchema);

@@ -34,15 +34,15 @@
      },
      //  2022.06.29 - 00:37:09 - to hash the password
      salt: String,
-     // // 2018.03.27 - 00:38:17 - strategy used to register the student
+     // // 2022.06.27 - 00:38:17 - strategy used to register the student
      provider: {
          type: String,
          required: 'Provider is required',
          default: 'local'
      },
-     // // 2018.03.27 - 00:38:41 - student identifier for the authentication strategy
+     // // 2022.06.27 - 00:38:41 - student identifier for the authentication strategy
      // providerId: String,
-     // // 2018.03.27 - 00:38:59 - to store the student object retrieved from OAuth providers
+     // // 2022.00.27 - 00:38:59 - to store the student object retrieved from OAuth providers
      // providerData: {},
      firstName: String,
      lastName: String,

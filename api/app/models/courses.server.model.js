@@ -32,28 +32,10 @@
         required: false,
         default: 0
       },
-      sections: [{
-        title: {
-          type: String,
-          required: true
-        },
-        lectures: [{
-          title: {
-            type: String,
-            required: true
-        },
-    
-        text: {
-            type: String,
-            required: () => this.type === 'text'
-        }
-        }],
-        question: [{
-          type: mongoose.Schema.ObjectId,
-          ref: 'question'
-        }]
-
-      }],  
+      module: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Modules'
+    }],  
      students: [
          {
              type: mongoose.Schema.ObjectId,

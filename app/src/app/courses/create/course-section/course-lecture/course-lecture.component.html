@@ -58,7 +58,7 @@
           <div class="d-flex flex-column flex-grow-1">
             <div>
               <mat-form-field *ngIf="lecture.type === 'quiz' && lecture.title">
-                <form [formGroup]="form">
+                <form [formGroup]="form" class="quiz">
                   <div class="input-field">
                       <input matInput type="text" name="question"
                          placeholder="Question" formControlName="question">

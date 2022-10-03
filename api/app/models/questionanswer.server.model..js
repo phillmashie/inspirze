@@ -8,7 +8,7 @@ const questionanswerSchema = new Schema({
     },
     question: [{
         type: mongoose.Schema.ObjectId,
-        ref: 'question'
+        ref: 'Questions'
       }],
       students: [
         {
