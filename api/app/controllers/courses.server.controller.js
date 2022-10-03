@@ -17,17 +17,18 @@
  
  // Get list of courses
  module.exports.GetCourses = function (req, res, next) {
-    console.log("getting courses");
-     Course.find({},(err, courses) => {
-         if (err) {
+    const courseId = req.params.courseId;
+    Course.find({courses: { $ne: courseId }},(err, courses) => {
+        if (err) {
             console.log(err);
-             return res.status(400).send({
-                 message: getErrorMessage(err)
-             });
-         } else {
-             res.status(200).json(courses);
-         }
-     });
+            return res.status(400).send({
+                message: getErrorMessage(err)
+            });
+        } else {
+            console.log(res);
+            res.status(200).json(courses);
+        }
+    });
  }
  
  // add course
@@ -87,6 +88,7 @@
      // 3. delete THIS course
      Course.remove({ _id: courseId }, (err) => {
          if (err) {
+            console.log(err);
              return res.status(400).send({
                  message: getErrorMessage(err)
              });
@@ -124,13 +126,15 @@
  module.exports.GetEnrolledCourses = function (req, res, next) {
      const studentId = req.params.studentId;
  
-     Course.find({ students: studentId },
+     Course.find({ students: {$in:studentId} },
          (err, c) => {
              if (err) {
                  return res.status(400).send({
                      message: getErrorMessage(err)
                  });
+                 
              } else {
+                console.log(c);
                  res.status(200).json(c);
              }
          }

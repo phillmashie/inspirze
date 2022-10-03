@@ -6,6 +6,7 @@ import { AlertService } from '../../alert/alert.service';
 import { StudentsService } from '../../students/students.service';
 import { MatDialog } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-listcourse',
   templateUrl: './listcourses.component.html',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ListCoursesComponent implements OnInit {
 
-  availableCourses: Course[];
+  availableCourses: any[];
   enrolledCourses: Course[];
   currentStudentId: String;
   isAdmin: Boolean;
@@ -29,31 +30,33 @@ export class ListCoursesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.currentStudentId = this._authService.getStudent()?.id;
+    this.currentStudentId = this._authService.getStudent()?._id;
 
     this.isAdmin = this._authService.isAdmin();
 
     // enrolled courses only for student display
-    if (!this.isAdmin) {
+    if (this.isAdmin) {
       // if (!this._authService.isAdmin()) {
       this._studentService.getEnrolledCourses(this.currentStudentId)
-        .subscribe(({ data }: any) => {
-          this.enrolledCourses = data.enrolledCourses.slice();
+        .subscribe(( data : any) => {
+          this.enrolledCourses = data;
+          console.log(data)
 
         });
     }
 
     // avail courses received for both student and admin display
     this._studentService.getAvailableCourses(this.currentStudentId)
-      .subscribe(({ data }: any)  => {
-        this.availableCourses = data?.availableCourses.slice();
+      .subscribe(( data : any)  => {
+        this.availableCourses = data;
+        console.log(data);
       });
   
   }
 
   deleteCourse(id: any, code: String) {
     this._coursesService.deleteCourse(id)
-      .subscribe(({ data }: any) => {
+      .subscribe(( data : any) => {
         this._alertService.success(`Course (${code}) successfully deleted`, true);
         this.ngOnInit();
 

@@ -44,7 +44,7 @@
               <h6 class="card-subtitle mb-2 text-muted">Student #: {{student.studentNumber}}</h6>
               <p class="card-text">
                   <b>Program</b>: {{student.program}}</p>
-              <a class="card-link text-success" (click)="enrollInCourse(student.id, student.studentNumber)">
+              <a class="card-link text-success" (click)="enrollInCourse(student._id, student.studentNumber)">
                   <i class="fa fa-plus-square fa-3x" aria-hidden="true"></i>
               </a>
           </div>
@@ -73,10 +73,10 @@
                       <td>{{ s.program }}</td>
                       <td>
                           <!-- STUDENT BUTTON -->
-                          <a [routerLink]="[ 'details'] " [queryParams]="{id: s.id} " class="btn btn-outline-primary " *ngIf='!isAdminView'>View Profile</a>
+                          <a [routerLink]="[ 'details'] " [queryParams]="{id: s._id} " class="btn btn-outline-primary " *ngIf='!isAdminView'>View Profile</a>
 
                           <!-- ADMIN BUTTON -->
-                          <a *ngIf='isAdminView' (click)="dropStudent(s.id, s.studentNumber) " class="btn btn-outline-danger ">Drop Student</a>
+                          <a *ngIf='isAdminView' (click)="dropStudent(s._id, s.studentNumber) " class="btn btn-outline-danger ">Drop Student</a>
                       </td>
                   </tr>
               </tbody>

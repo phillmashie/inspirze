@@ -16,7 +16,7 @@ import { Deserializable } from './deserializable';
 import { Section } from './section';
 
 export class Course implements Deserializable {
-  id?: string;
+  _id?: string;
   courseCode?: string;
   title?: string;
   subtitle?: string;
@@ -27,8 +27,8 @@ export class Course implements Deserializable {
 
   deserialize(input: any) {
     Object.assign(this, input);
-    this.id = input._id;
-    this.sections = input.sections ? input.sections.map((section: any) => new Section().deserialize(section)) : new Section();
+    this._id = input?._id;
+    this.sections = input?.sections ? input.sections.map((section: any) => new Section().deserialize(section)) : new Section();
     return this;
   }
 }

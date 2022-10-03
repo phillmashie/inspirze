@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray, ValidationErrors, NgForm } from '@angular/forms';
+import { FormGroup, FormArray, ValidationErrors, NgForm, FormBuilder, Validators } from '@angular/forms';
 import { CoursesService } from '../../../courses.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -43,7 +43,8 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
     private courseService: CoursesService,
     private notificationService: NotificationService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -52,15 +53,48 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
 
-    if(this.courseService.getQuizId()==undefined)
-    {
-      this.router.navigate(['/teacher/uploadquiz']);
-    }
-    else
-    {
-      this.quizid=this.courseService.getQuizId();
+    // if(this.courseService.getQuizId()==undefined)
+    // {
+    //   this.router.navigate(['/teacher/uploadquiz']);
+    // }
+    // else
+    // {
+    //   this.quizid=this.courseService.getQuizId();
 
-    }
+    // }
+  }
+
+  form = this.fb.group({
+    question: [
+      '',
+      {
+        validators: [Validators.required],
+      },
+    ],
+    answer: ['', [Validators.required, Validators.minLength(1)]],
+    options: this.fb.array([]),
+  });
+
+  get answerOptionsFieldAsFormArray(): any {
+    return this.form.get('options') as unknown as FormArray;
+  }
+
+  option(): any {
+    return this.fb.group({
+      role: this.fb.control(''),
+    });
+  }
+
+  addControl(): void {
+    this.answerOptionsFieldAsFormArray.push(this.option());
+  }
+
+  remove(i: number): void {
+    this.answerOptionsFieldAsFormArray.removeAt(i);
+  }
+
+  formValue(): void {
+    console.log(this.form.value);
   }
 
   ngOnDestroy(): void {

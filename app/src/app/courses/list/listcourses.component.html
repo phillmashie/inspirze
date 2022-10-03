@@ -1,4 +1,4 @@
-<div style="padding-top:25px; padding-bottom:45px" *ngIf='this._authService.isAdmin()'>
+<div style="padding-top:25px; padding-bottom:45px"  *ngIf='this._authService.isAdmin()' >
     <a [routerLink]="['create']" class="btn btn-outline-success" [ngClass]="{'pull-left': availableCourses?.length}">Create New Course</a>
 </div>
 
@@ -19,6 +19,7 @@
     </p>
 
     <div style="margin-top:15px" *ngIf="enrolledCourses?.length">
+
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -35,10 +36,10 @@
                     <th scope="row">{{ data.courseCode }}</th>
                     <td>{{ data.title }}</td>
                     <td>{{ data.subtitle }}</td>
-                    <td>{{ data.description }}</td>
+                    <td [innerHTML]="data.description">{{ data.description }}</td>
                     <td>{{ data.students.length }}</td>
                     <td>
-                        <a [routerLink]="['details']" [queryParams]="{id: data.id}" class="btn btn-outline-primary">View Details</a>
+                        <a [routerLink]="['details']" [queryParams]="{id: data._id}" class="btn btn-outline-primary">View Details</a>
                     </td>
                 </tr>
             </tbody>

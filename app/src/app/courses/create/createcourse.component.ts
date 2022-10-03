@@ -209,7 +209,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     }
     if (this.editMode) {
       this.courseService
-        .updateCourse(this.course.id, formValue)
+        .updateCourse(this.course._id, formValue)
         .subscribe(({ data }: any) => {
           const updatedCourse = data.updateCourse;
           this.course = new Course().deserialize(updatedCourse);

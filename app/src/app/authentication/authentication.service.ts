@@ -1,8 +1,6 @@
-import { HttpClient, HttpResponse, HttpRequest, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-//import { Http, Response, RequestOptions, Headers } from '@angular/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { map, Observable, pipe, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Credentials } from '../interfaces/credentials';
 import { Student } from '../interfaces/student';
@@ -13,15 +11,11 @@ export class AuthenticationService {
   private _baseURL = environment.backendURL + 'api/students';
   private _student: Student;
 
-  constructor(private _http: HttpClient) { 
-    //this._student=this._student;
-  }
-
-  //this._student=this._student.bind(this);
+  constructor(private _http: HttpClient) { }
 
   isLoggedIn(): boolean {
     // return this.student;
-    //console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
+    // console.log(`inside auth service checking if loggedin: ${sessionStorage.getItem('currentStudent') !== null}`);
     return sessionStorage.getItem('currentStudent') !== null;
   }
 
@@ -38,19 +32,17 @@ export class AuthenticationService {
     // perform a request with 'post' http method
     return this._http
       .post<any>(this._baseURL + '/login', credentials)
-      
       // .map(res => this.student = res.json())
       .pipe(
-        map((res : string) => {
-          sessionStorage.setItem('currentStudent', res.toString());
+        map(res  => {
+          sessionStorage.setItem('currentStudent', JSON.stringify(res));
         })
-      );
-      
-      
+       
+      )
       
   }
 
-  // 2022.06.28 - 22:03:42
+  // 2018.03.28 - 22:03:42
   logout() {
     // remove student from session storage to log user out
     sessionStorage.removeItem('currentStudent');

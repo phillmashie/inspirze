@@ -58,9 +58,30 @@
           <div class="d-flex flex-column flex-grow-1">
             <div>
               <mat-form-field *ngIf="lecture.type === 'quiz' && lecture.title">
+                <form [formGroup]="form">
+                  <div class="input-field">
+                      <input matInput type="text" name="question"
+                         placeholder="Question" formControlName="question">
+                  </div>
+                  <div class="input-field">
+                      <input matInput type="text"
+                         placeholder="Correct Answer" formControlName="answer">
+                  </div>
+                  <div *ngFor="let control of  answerOptionsFieldAsFormArray.controls ;let i = index;" formArrayName='options' >
+                      <div [formGroupName]="i" >
+                          <div  class="input-field" >
+                          <input matInput type="text"
+                              placeholder="Answer" formControlName="answer" >
+                          </div>
+                          <button class="button" type="button" (click)="remove(i)" >Remove</button>
+                      </div>
+                  </div>
+                  <button  class="button" (click)="addControl()" > Add New Answer</button>
+                
+              </form>
                
-                  <div class="container mt-5">
-                    <form #f="ngForm" (ngSubmit)="addQuestion(f)">
+                  <!-- <div class="container mt-5">
+                    <form #f="ngForm" (ngSubmit)="addQuestion(f)" align="center">
 
 
 
@@ -103,9 +124,9 @@
 
 
                       <!-- <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button> -->
-                    </form>
+                    <!--</form>
                     <p class="social-text" style="color: red;font-weight: bold;font-size: 20px;" *ngIf="avail">{{msg}}</p>
-                  </div>
+                  </div> -->
               </mat-form-field>
   
             </div>

@@ -32,7 +32,7 @@ export class CreateComponent {
   create() {
     this._studentsService
       .create(this.student)
-      .subscribe(({ createdStudent }: any) => {
+      .subscribe((createdStudent : any) => {
         // 2022.03.30 - 11:50:04 - add alert service
         // keep showing the alert even after redirected to /student/details/:id
         this._alertService.success(`Student (#${createdStudent.studentNumber}) successfully created`, true);

@@ -12,7 +12,7 @@ import { CoursesService } from '../courses.service';
 export class UpdateCourseComponent implements OnInit {
 
   public courseId: String;
-  public course: Course;
+  public course: any;
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
@@ -23,14 +23,14 @@ export class UpdateCourseComponent implements OnInit {
 
   ngOnInit() {
     this._courseService
-      .getCourse(this.course.id)
-      .subscribe(({course}: any) => this.course = course);
+      .getCourse(this.course?._id)
+      .subscribe(course => this.course = course);
   }
 
   update() {
     this._courseService
-      .updateCourse(this.course.id, this.course)
-      .subscribe(({ updatedCourse }: any) => {
+      .updateCourse(this.course._id, this.course)
+      .subscribe(( updatedCourse : any) => {
         this._alertService.success(`Course (${updatedCourse.courseCode}) successfully updated`, true);
         this._router.navigate(['/courses/details'],
           { queryParams: { 'id': updatedCourse._id } }

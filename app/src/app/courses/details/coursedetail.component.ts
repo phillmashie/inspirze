@@ -31,7 +31,7 @@ export class CourseDetailComponent implements OnInit {
     private _alertService: AlertService,
     private _studentsService: StudentsService,
     private _coursesService: CoursesService) {
-    this._route.queryParams.subscribe(params => this.courseId = params['id']);
+    this._route.queryParams.subscribe(params => this.courseId = params['_id']);
     this.currentStudent = this._authService.getStudent();
   }
 
@@ -41,7 +41,7 @@ export class CourseDetailComponent implements OnInit {
     this._coursesService
       .getCourse(this.courseId)
       .subscribe( (res : any) => {
-        this.course = res.course.slice();
+        this.course = res?.course.slice();
         this.isAdminView = this._authService.isAdmin();
         if (this.course?.students.length > 0) {
           this.hasStudents = true;
@@ -57,7 +57,7 @@ export class CourseDetailComponent implements OnInit {
   enrollInCourse(studentId?: String, studentNumber?: Number) {
     this._studentsService
       // admin ? use arg : use authenticated student's id
-      .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent?.id })
+      .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent?._id })
       .subscribe(res => {
         this._alertService.success(`Student (#${studentNumber ? studentNumber : this.currentStudent.studentNumber}) has successfully registered in this course (${this.course.courseCode})!`, false);
         this.ngOnInit();
@@ -72,7 +72,7 @@ export class CourseDetailComponent implements OnInit {
 
   dropCourse() {
     this._studentsService
-      .dropCourse({ courseId: this.courseId, studentId: this.currentStudent?.id })
+      .dropCourse({ courseId: this.courseId, studentId: this.currentStudent?._id })
       .subscribe( res  => {
         this._alertService.success(`Student (#${this.currentStudent.studentNumber}) has successfully dropped this course (${this.course.courseCode})!`, true);
         this.ngOnInit();
@@ -95,7 +95,7 @@ export class CourseDetailComponent implements OnInit {
   getNotEnrolledStudents() {
     this._coursesService
       .getNotEnrolledStudents(this.courseId)
-      .subscribe( ({ res} : any)  => {
+      .subscribe( ( res : any)  => {
         this.showNotEnrolledStudents = true;
         this.notEnrolledStudents = res;
         error => this._alertService.error(error);
@@ -106,7 +106,7 @@ export class CourseDetailComponent implements OnInit {
   private _isCurrentStudentEnrolledInThisCourse(): Boolean {
     let result = false;
     this.course.students.forEach(s => {
-      if (s.id === this.currentStudent.id) {
+      if (s._id === this.currentStudent._id) {
         result = true;
         return result;
       }

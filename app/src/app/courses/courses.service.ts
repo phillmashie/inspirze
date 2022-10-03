@@ -198,7 +198,7 @@ export class CoursesService {
       return this._http.delete(this._courseBaseURL + '/' + id);
     }
   
-    getCourse(id: any) {
+    getCourse(id: any): Observable<any>  {
         return this._http.get(this._courseBaseURL + '/' + id);
 
     }

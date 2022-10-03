@@ -1,24 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const lectureSchema = new Schema({
-    title: {
+const questionSchema = new Schema({
+    question: {
         type: String,
-        required: true
-    },
-    type: {
-        type: String,
-        enum: ['text'],
         required: true
     },
 
-    text: {
+    type: {
         type: String,
-        required: () => this.type === 'text'
-    }
+        required: true
+    },
+
+    questionoption: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'questionoption'
+      }]
    
 },
 { timestamps: true }
 );
 
-module.exports = mongoose.model("Lecture", lectureSchema);
+module.exports = mongoose.model("Question", questionSchema);

@@ -22,11 +22,11 @@ export class PersonalGuard implements CanActivate {
       // if the id param contained in the url does not match the authenticated student's id, restrict access
       this._route.queryParams.subscribe(params => this._idParam = params['id']);
 
-      if (this._idParam !== this._authService.getStudent()?.id) {
+      if (this._idParam !== this._authService.getStudent()?._id) {
 
         this._alertService.error(`Unauthorized access!`, true);
         this._router.navigate(['/students/details'],
-          { queryParams: { 'id': this._authService.getStudent()?.id } });
+          { queryParams: { 'id': this._authService.getStudent()?._id } });
 
         return false;
       }

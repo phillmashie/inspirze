@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a routerLink="/home" class="navbar-brand">Inspirze Learning</a>
       <span *ngIf='this._authService.isLoggedIn()'>
-          Logged in as {{this._authService.getStudent().firstName}} (#{{this._authService.getStudent().studentNumber}})
+          Logged in as {{this._authService.getStudent()?.firstName}} (#{{this._authService.getStudent()?.studentNumber}})
       </span>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"

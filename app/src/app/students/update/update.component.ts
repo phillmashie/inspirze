@@ -17,7 +17,7 @@ export class UpdateComponent implements OnInit {
     private _router: Router,
     private _alertService: AlertService,
     private _studentService: StudentsService) {
-    this._route.queryParams.subscribe(params => this.studentId = params['id']);
+    this._route.queryParams.subscribe(params => this.studentId = params['_id']);
   }
 
   ngOnInit() {

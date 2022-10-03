@@ -152,7 +152,7 @@
              } else {
                  Course.findOneAndUpdate(
                      { _id: courseId },
-                     { $push: { students: s['_id'] } },
+                     { $push: { students: s?._id } },
                      { new: true },
                      (err, c) => {
                          if (err) {
@@ -160,7 +160,7 @@
                                  message: getErrorMessage(err)
                              });
                          } else {
-                             console.log(`Successfully added course (${c.courseCode}) to student (#${s.studentNumber}) ...`);
+                             console.log(`Successfully added course (${c?.courseCode}) to student (#${s?.studentNumber}) ...`);
                              res.json(c);
                          }
                      }
