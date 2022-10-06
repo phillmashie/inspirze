@@ -1,0 +1,23 @@
+body, html {
+  height: 100%;
+}
+.bee{
+ margin-top: 550px;
+} 
+.hero {
+
+background-size:cover;
+background-repeat: no-repeat;
+background-position: center;
+
+}
+
+.selectorBox{
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 2147483641 !important;
+display: none;
+}
