@@ -1,10 +1,11 @@
 
-<div class="container-fluid">
+<div class="app-floalaeditor-container" #container>
   <div class="mb-3">
-    <div [froalaEditor]="options" [froalaModel]="content"></div>
+    <div class="editor" id="mymaineditor{{componentid}}" [froalaEditor]="options" [froalaModel]="content" (froalaModelChange)="changeContent($event)"></div>
   </div>
 </div>
-
+<pre>{{componentid | json}}</pre>
+<pre>{{selectedComponentId | json}}</pre>
 <div id="selection_box" class="selectorBox">
   <iframe src="http://localhost:4201" style="height: 100%;width: 100%;" frameborder="0"></iframe>
 </div>

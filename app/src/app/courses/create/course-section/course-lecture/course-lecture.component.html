@@ -16,7 +16,7 @@
         <!-- <div *ngIf="sectionFormGroup.get('lectures')['controls'].length > 1" class="drag-handle">
           <ng-content></ng-content>
         </div>-->
-      </div> 
+      </div>
 
       <div class="d-flex flex-row p-1">
         <div class="d-flex flex-column flex-grow-1">
@@ -33,11 +33,18 @@
               </mat-error>
             </mat-form-field>
 
-            <div>
-              <app-floalaeditor>
-      
+            <mat-form-field class="app-floalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
+              <app-floalaeditor
+              formControlName="text"
+                placeholder="Lecture content"
+                [required]
+                [componentid]="'lecture' + lectureIndex + '-' + sectionIndex"
+              >
               </app-floalaeditor>
-            </div>
+              <mat-error *ngIf="lectureFormGroup.get('text').hasError('required')">
+                Lecture content is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
 
             <!-- <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
               <quill-material
@@ -76,9 +83,9 @@
                       </div>
                   </div>
                   <button  class="button" (click)="addControl()" > Add New Answer</button>
-                
+
               </form>
-               
+
                   <!-- <div class="container mt-5">
                     <form #f="ngForm" (ngSubmit)="addQuestion(f)" align="center">
 
@@ -127,7 +134,7 @@
                     <p class="social-text" style="color: red;font-weight: bold;font-size: 20px;" *ngIf="avail">{{msg}}</p>
                   </div> -->
               </mat-form-field>
-  
+
             </div>
           </div>
 

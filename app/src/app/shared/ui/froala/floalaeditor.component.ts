@@ -1,6 +1,8 @@
-import { Subscription } from "rxjs";
-import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from "@angular/core";
+import { Observable, Subscription } from "rxjs";
+import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit, OnDestroy, HostListener, ViewChild, ElementRef, forwardRef } from "@angular/core";
 import FroalaEditor from "froala-editor";
+import { MatFormFieldControl } from "@angular/material/form-field";
+import { AbstractControlDirective, NgControl, NG_VALUE_ACCESSOR } from "@angular/forms";
 declare var $: any;
 // declare var FroalaEditor: any;
 
@@ -9,9 +11,22 @@ declare var $: any;
   selector: 'app-floalaeditor',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './floalaeditor.component.html',
-  styleUrls: ['./floalaeditor.component.css']
+  styleUrls: ['./floalaeditor.component.css'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => FloalaeditorComponent),
+    multi: true
+  },
+  {
+    provide: MatFormFieldControl,
+    useExisting: FloalaeditorComponent
+  }],
+  host: {
+    '[id]': 'id',
+    '[attr.aria-describedby]': 'describedBy'
+  }
 })
-export class FloalaeditorComponent  implements OnInit, OnDestroy  {
+export class FloalaeditorComponent  implements OnInit, OnDestroy, MatFormFieldControl<any>   {
   public visible = false;
   public visibleAnimate = false;
 
@@ -26,6 +41,7 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy  {
   @Input() toggleedit: any;
   @Input() hidebutton: any;
   @Input() componentid: any;
+  selectedComponentId: string;
 
   @Output() contentanswer = new EventEmitter();
 
@@ -35,23 +51,59 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy  {
 
 
   constructor() { }
+  value: any;
+  stateChanges: Observable<void>;
+  id: string;
+  placeholder: string;
+  ngControl: AbstractControlDirective | NgControl;
+  focused: boolean;
+  empty: boolean;
+  shouldLabelFloat: boolean;
+  required: boolean;
+  disabled: boolean;
+  errorState: boolean;
+  controlType?: string;
+  autofilled?: boolean;
+  userAriaDescribedBy?: string;
+  setDescribedByIds(ids: string[]): void {
+    throw new Error("Method not implemented.");
+  }
+  onContainerClick(event: MouseEvent): void {
+    throw new Error("Method not implemented.");
+  }
+ setContent(){
+  console.log(this.componentid + "trigger");
+  this.selectedComponentId = this.componentid;
+  console.log(this.selectedComponentId);
+  if ($("#mymaineditor" + (this.componentid ? this.componentid : "")).hasClass("fr-fullscreen")) {
+    $("#selection_box").css("padding-left", "0px");
+  } else {
+    $("#selection_box").css("padding-left", "0px");
+  }
+
+  $("#selection_box").show();
+ }
 
   ngOnInit(): void {
-    FroalaEditor.DefineIcon("insert_template", { NAME: "plus", SVG_KEY: "add" });
-    FroalaEditor.RegisterCommand("insert_template", {
+    FroalaEditor.DefineIcon("insert_template" + this.componentid, { NAME: "plus", SVG_KEY: "add" });
+    FroalaEditor.RegisterCommand("insert_template" + this.componentid, {
       title: "Insert Template Content",
       focus: false,
       undo: false,
       refreshAfterCallback: false,
       showOnMobile: false,
       callback: () => {
-        if ($("#mymaineditor" + (this.componentid ? this.componentid : "")).hasClass("fr-fullscreen")) {
-          $("#selection_box").css("padding-left", "0px");
-        } else {
-          $("#selection_box").css("padding-left", "0px");
-        }
+        this.setContent();
+        // console.log(this.componentid + "trigger");
+        // this.selectedComponentId = this.componentid;
+        // console.log(this.selectedComponentId);
+        // if ($("#mymaineditor" + (this.componentid ? this.componentid : "")).hasClass("fr-fullscreen")) {
+        //   $("#selection_box").css("padding-left", "0px");
+        // } else {
+        //   $("#selection_box").css("padding-left", "0px");
+        // }
 
-        $("#selection_box").show();
+        // $("#selection_box").show();
       },
     });
 
@@ -81,7 +133,7 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy  {
           buttonsVisible: 3,
         },
         moreRich: {
-          buttons: ["insertLink", "insertImage", "insertVideo", "insert_template", "insertTable", "emoticons", "fontAwesome", "specialCharacters", "embedly", "insertFile", "insertHR"],
+          buttons: ["insertLink", "insertImage", "insertVideo", "insert_template" + this.componentid, "insertTable", "emoticons", "fontAwesome", "specialCharacters", "embedly", "insertFile", "insertHR"],
           align: "left",
           buttonsVisible: 4,
         },
@@ -124,17 +176,22 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy  {
   }
   @HostListener("window:message", ["$event"])
   onMessage(e) {
+    console.log(this.componentid);
+    if(this.selectedComponentId == this.componentid){
+      console.log("this one should work");
 
-    if (e.origin != "http://localhost:4201") {
-      // set your origin
-      return false;
+      if (e.origin != "http://localhost:4201") {
+        // set your origin
+        return false;
+      }
+      this.content += e.data.message;
+      this.contentanswer.emit(this.content);
+      $("#selection_box").hide();
+      setTimeout(() => {
+        this.updateSections();
+      }, 1000);
     }
-    this.content += e.data.message;
-    this.contentanswer.emit(this.content);
-    $("#selection_box").hide();
-    setTimeout(() => {
-      this.updateSections();
-    }, 1000);
+    this.selectedComponentId = "";
   }
 
   updateSections() {

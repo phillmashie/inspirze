@@ -3,7 +3,7 @@ body, html {
 }
 .bee{
  margin-top: 550px;
-} 
+}
 .hero {
 
 background-size:cover;
@@ -11,6 +11,15 @@ background-repeat: no-repeat;
 background-position: center;
 
 }
+
+.editor{
+  height: 200px
+}
+
+img {
+  position: relative;
+}
+
 
 .selectorBox{
 position: fixed;

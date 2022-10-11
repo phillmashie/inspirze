@@ -14,8 +14,8 @@
 // installed node modules
 const express = require('express');
 const session = require('express-session');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require("body-parser");
 //  2022.06.29 - 00:15:19 - added passport
 const passport = require('passport');
 

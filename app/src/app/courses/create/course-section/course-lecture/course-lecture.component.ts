@@ -22,6 +22,7 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
   @Input() sectionFormGroup: FormGroup;
   @Input() courseFormGroup: FormGroup;
   @Input() lectureIndex: number;
+  @Input() sectionIndex: number;
 
   formChangesSubscription: Subscription;
 
@@ -53,7 +54,7 @@ export class CourseLectureComponent implements OnInit, OnDestroy {
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
 
-    
+
   }
 
   form = this.fb.group({

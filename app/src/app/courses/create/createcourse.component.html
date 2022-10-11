@@ -46,22 +46,19 @@
           Subitle is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <div>
-        <app-floalaeditor>
 
-        </app-floalaeditor>
-      </div>
-
-      <!-- <mat-form-field class="quill-material-container">
-        <quill-material
+      <mat-form-field class="app-floalaeditor-container">
+        <app-floalaeditor
           formControlName="description"
           placeholder="Description"
           [required]
-        ></quill-material>
+          [componentid]="'course'"
+        >
+        </app-floalaeditor>
         <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
           Description is <strong>required</strong>
         </mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
     </div>
 
     <div>
