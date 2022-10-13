@@ -47,14 +47,23 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="app-floalaeditor-container">
+      <!-- <mat-form-field class="app-floalaeditor-container">
         <app-floalaeditor
           formControlName="description"
           placeholder="Description"
           [required]
-          [componentid]="'course'"
-        >
-        </app-floalaeditor>
+        ></app-floalaeditor>
+        <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field> -->
+
+      <mat-form-field class="quill-material-container">
+        <quill-material
+          formControlName="description"
+          placeholder="Description"
+          [required]
+        ></quill-material>
         <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
           Description is <strong>required</strong>
         </mat-error>

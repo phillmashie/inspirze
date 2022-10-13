@@ -33,7 +33,7 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="app-floalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
+            <!-- <mat-form-field class="app-floalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
               <app-floalaeditor
               formControlName="text"
                 placeholder="Lecture content"
@@ -44,9 +44,20 @@
               <mat-error *ngIf="lectureFormGroup.get('text').hasError('required')">
                 Lecture content is <strong>required</strong>
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
+<!--
+            <mat-form-field class="app-floalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
+              <quill-material
+                formControlName="description"
+                placeholder="Description"
+                [required]
+              ></quill-material>
+              <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
+                Description is <strong>required</strong>
+              </mat-error>
+            </mat-form-field> -->
 
-            <!-- <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
+            <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
               <quill-material
                 formControlName="text"
                 placeholder="Lecture content"
@@ -55,16 +66,20 @@
               <mat-error *ngIf="lectureFormGroup.get('text').hasError('required')">
                 Lecture content is <strong>required</strong>
               </mat-error>
-            </mat-form-field> -->
+            </mat-form-field>
 
           </div>
         </div>
           <!-- quiz start here -->
         <div class="d-flex flex-row p-1">
-          <div class="d-flex flex-column flex-grow-1">
+          <div class="d-flex flex-column flex-grow-0">
             <div>
               <mat-form-field *ngIf="lecture.type === 'quiz' && lecture.title">
-                <form [formGroup]="form" class="quiz">
+
+                <app-quiz>
+
+                </app-quiz>
+                <!-- <form [formGroup]="form" class="quiz">
                   <div class="input-field">
                       <input matInput type="text" name="question"
                          placeholder="Question" formControlName="question">
@@ -84,7 +99,7 @@
                   </div>
                   <button  class="button" (click)="addControl()" > Add New Answer</button>
 
-              </form>
+              </form> -->
 
                   <!-- <div class="container mt-5">
                     <form #f="ngForm" (ngSubmit)="addQuestion(f)" align="center">

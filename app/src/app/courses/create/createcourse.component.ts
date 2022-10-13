@@ -210,7 +210,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     if (this.editMode) {
       this.courseService
         .updateCourse(this.course._id, formValue)
-        .subscribe(({ data }: any) => {
+        .subscribe((data : any) => {
           const updatedCourse = data.updateCourse;
           this.course = new Course().deserialize(updatedCourse);
           this.courseFormGroup = this.setForm(updatedCourse);
@@ -219,7 +219,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     } else {
       this.courseService
         .createCourse(formValue)
-        .subscribe(course => {
+        .subscribe((course : any) => {
           this.notificationService.showSuccess('Course successfully created');
           this.router.navigate(['/courses/details']);
         });
@@ -247,7 +247,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
           'Confirm action',
           'The course contains unsaved changes. Are you sure you want to go back?'
         ),
-        maxWidth: '400px' 
+        maxWidth: '400px'
       });
 
       dialogRef.afterClosed().subscribe(res => {

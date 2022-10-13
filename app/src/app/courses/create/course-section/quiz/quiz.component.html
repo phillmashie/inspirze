@@ -1,48 +1,25 @@
 
-<div class="container mt-5">
-  <form #f="ngForm" (ngSubmit)="addQuestion(f)">
-
-
-
-
-    <div class="form-group">
-      <label for="questionText">Question Text</label>
-      <input type="text" name="questionText" class="form-control" autocomplete="off" id="questionText" ngModel required
-        #questionText="ngModel">
+<div class="container">
+  <div class="col-lg-12">
+    <h1 class="bd-title" id="content">Question Form </h1><br />
+    <div>
+      <button class="btn btn-primary" (click)="addNewQuestion(0,questions.length)">Add</button>
+  <form  >
+    <div *ngFor="let question of nestedQuestions;let i = index">
+    <div [formGroup]="questionWiseFormGroups[question.parentQuestionId].controls[i]" class="form-group">
+      <label>Question</label>
+      <input type="text" formControlName="question" class="form-control"  />
+      <label>Answer</label>
+      <input type="text" formControlName="answer" class="form-control"  />
+      <button class="btn btn-primary" (click)="addChildQuestion(question)">Add</button>
+      <app-question-tree [title]="question.question" [questionFormArray]="questionFormArray" [questionId]="question.questionId" [questions]="question.questions" [formGroups]="questionWiseFormGroups[question.questionId]"></app-question-tree>
     </div>
-
-
-
-    <div class="form-group">
-      <label for="optionA">Option1</label>
-      <input type="text" class="form-control" name="optionA" autocomplete="off" id="optionA" ngModel required #optionA="ngModel">
     </div>
-
-    <div class="form-group">
-      <label for="optionB">Option2</label>
-      <input type="text" class="form-control" name="optionB"  autocomplete="off" id="optionB" ngModel required #optionB="ngModel">
-    </div>
-
-    <div class="form-group">
-      <label for="optionC">Option3</label>
-      <input type="text" class="form-control" name="optionC" autocomplete="off" id="optionC" ngModel required #optionC="ngModel">
-    </div>
-
-    <div class="form-group">
-      <label for="optionD">Option4</label>
-      <input type="text" class="form-control" name="optionD" autocomplete="off" id="optionD" ngModel required #optionD="ngModel">
-    </div>
-
-    <div class="form-group" style="margin-top: 10px;">
-      <label for="answer">Answer</label>
-      <input type="radio" value="1" name="answer" id="answer" ngModel required #answer="ngModel">1
-      <input type="radio" value="2" name="answer" id="answer" ngModel required #answer="ngModel">2
-      <input type="radio" value="3" name="answer" id="answer" ngModel required #answer="ngModel">3
-      <input type="radio" value="4" name="answer" id="answer" ngModel required #answer="ngModel">4
-    </div>
+    <button  class="btn btn-primary" (click)="save()">Submit</button><br/>
 
 
-    <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit</button>
   </form>
-  <p class="social-text" style="color: red;font-weight: bold;font-size: 20px;" *ngIf="avail">{{msg}}</p>
+</div>
+
+  </div>
 </div>

@@ -1,7 +1,7 @@
 
 <div class="app-floalaeditor-container" #container>
   <div class="mb-3">
-    <div class="editor" id="mymaineditor{{componentid}}" [froalaEditor]="options" [froalaModel]="content" (froalaModelChange)="changeContent($event)"></div>
+    <div class="editor" id="mymaineditor{{componentid}}" [froalaEditor]="options" [froalaModel]="formControlName" (froalaModelChange)="changeContent($event)"></div>
   </div>
 </div>
 <pre>{{componentid | json}}</pre>

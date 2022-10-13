@@ -1,5 +1,9 @@
 <div class="quill-material-container" #container>
-  <div class="editor" (click)="onTouched()"></div>
+  <div id="mymaineditor{{componentid}}" class="editor" (click)="onTouched()"></div>
+</div>
+
+<div id="selection_box" class="selectorBox">
+  <iframe src="http://localhost:4201" style="height: 100%;width: 100%;" frameborder="0"></iframe>
 </div>
 
 

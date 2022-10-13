@@ -58,6 +58,8 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
   ngControl: any;
   touched = false;
   focused = false;
+  @Input() componentid: any;
+  selectedComponentId: string;
 
   private writingValue = false;
   private defaultOptions = {
@@ -82,7 +84,8 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
         ['clean'],                                         // remove formatting button
 
         ['link', 'image', 'video'],                         // link and image, video
-        
+        ["insert_template"]                                 //custom button
+
       ]
     }
   };
@@ -143,7 +146,7 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
     return this.focused || !this.empty;
   }
 
-  
+
   @HostBinding('attr.aria-describedby') describedBy = '';
   setDescribedByIds(ids: string[]) {
     this.describedBy = ids.join(' ');
@@ -155,6 +158,18 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
       this.stateChanges.next();
     });
   }
+  setContent(){
+    console.log(this.componentid + "trigger");
+    this.selectedComponentId = this.componentid;
+    console.log(this.selectedComponentId);
+    if ($("#mymaineditor" + (this.componentid ? this.componentid : "")).hasClass("fr-fullscreen")) {
+      $("#selection_box").css("padding-left", "0px");
+    } else {
+      $("#selection_box").css("padding-left", "0px");
+    }
+
+    $("#selection_box").show();
+   }
 
   ngOnInit(): void {
     // avoid Cyclic Dependency
@@ -172,7 +187,55 @@ export class QuillMaterialComponent implements OnInit, DoCheck, OnDestroy, Contr
         this.onChange(this.getValue());
       }
     });
-    
+
+    this.quill.DefineIcon("insert_template" + this.componentid, { NAME: "plus", SVG_KEY: "add" });
+    this.quill.RegisterCommand("insert_template" + this.componentid, {
+      title: "Insert Template Content",
+      focus: false,
+      undo: false,
+      refreshAfterCallback: false,
+      showOnMobile: false,
+      callback: () => {
+        this.setContent();
+        // console.log(this.componentid + "trigger");
+        // this.selectedComponentId = this.componentid;
+        // console.log(this.selectedComponentId);
+        // if ($("#mymaineditor" + (this.componentid ? this.componentid : "")).hasClass("fr-fullscreen")) {
+        //   $("#selection_box").css("padding-left", "0px");
+        // } else {
+        //   $("#selection_box").css("padding-left", "0px");
+        // }
+
+        // $("#selection_box").show();
+      },
+    });
+    setTimeout(() => {
+      this.updateSections();
+    }, 1000);
+  }
+
+  @HostListener("window:message", ["$event"])
+  onMessage(e) {
+    console.log(this.componentid);
+    if(this.selectedComponentId == this.componentid){
+      console.log("this one should work");
+
+      if (e.origin != "http://localhost:4201") {
+        // set your origin
+        return false;
+      }
+      this.content += e.data.message;
+      this.contentanswer.emit(this.content);
+      $("#selection_box").hide();
+      setTimeout(() => {
+        this.updateSections();
+      }, 1000);
+    }
+    this.selectedComponentId = "";
+  }
+
+  updateSections() {
+
   }
 
   ngDoCheck(): void {

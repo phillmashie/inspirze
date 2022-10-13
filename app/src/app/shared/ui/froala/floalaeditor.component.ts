@@ -26,7 +26,7 @@ declare var $: any;
     '[attr.aria-describedby]': 'describedBy'
   }
 })
-export class FloalaeditorComponent  implements OnInit, OnDestroy, MatFormFieldControl<any>   {
+export class FloalaeditorComponent  implements OnInit, OnDestroy,  MatFormFieldControl<any>   {
   public visible = false;
   public visibleAnimate = false;
 
@@ -37,7 +37,7 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy, MatFormFieldCo
   public options: any;
   childData : string = " this is the string";
 
-  @Input() content: any;
+  @Input() formControlName: any;
   @Input() toggleedit: any;
   @Input() hidebutton: any;
   @Input() componentid: any;
@@ -184,8 +184,8 @@ export class FloalaeditorComponent  implements OnInit, OnDestroy, MatFormFieldCo
         // set your origin
         return false;
       }
-      this.content += e.data.message;
-      this.contentanswer.emit(this.content);
+      this.formControlName += e.data.message;
+      this.contentanswer.emit(this.formControlName);
       $("#selection_box").hide();
       setTimeout(() => {
         this.updateSections();
