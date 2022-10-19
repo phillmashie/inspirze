@@ -163,11 +163,11 @@ export class CoursesService {
   public msg: string = "";
     private _courseBaseURL: string = environment.backendURL + 'api/courses';
     private headers = new HttpHeaders().set('Content-Type', 'application/json');
-  
-    
+
+
 
     constructor(private _http: HttpClient) { }
-  
+
 
    listCourses() {
       return this._http
@@ -194,10 +194,10 @@ export class CoursesService {
       return this._http.delete(this._courseBaseURL + '/' + id);
     }
 
-    deleteQuestion(id: string): Observable<any>{
+    deleteQuestion(id: string){
       return this._http.delete(this._courseBaseURL + '/' + id);
     }
-  
+
     getCourse(id: any): Observable<any>  {
         return this._http.get(this._courseBaseURL + '/' + id);
 
@@ -213,18 +213,12 @@ export class CoursesService {
 
     }
 
-    addQuestion(body) {
-      return this._http.post(this._courseBaseURL + "teacher/addquestion", body, {
-        observe: 'body',
-        headers: new HttpHeaders().append('Content-Type', 'application/json')
-      });
-    }
 
     getQuizId() {
       return this.quizid;
     }
 
-    
+
 }
 
 

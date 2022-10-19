@@ -96,33 +96,37 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
     return formGroup;
   }
 
-  // getFormGroupQuestions(questions: any): FormGroup[] {
-  //   if (!questions || questions.length === 0) {
-  //     return [
-  //       this.fb.group({
-  //         id: null,
-  //         question: null,
-  //         options: this.fb.array(this.getFormGroupQuestions(null)),
-  //         answer: this.fb.array(this.getFormGroupQuestions(null))
-  //       })
-  //     ];
-  //   }
 
-  //   const formGroup = [];
-  //   for (const question of questions) {
-  //     formGroup.push(
-  //       this.fb.group({
-  //         id: question.id,
-  //         // title: [question.title, Validators.required],
-  //         question: [question.question, Validators.required],
-  //         options: this.fb.array(this.getFormGroupLectures(question.options)),
-  //         // text: question.text,
-  //         answer: this.fb.array(this.getFormGroupLectures(question.answer)),
-  //       })
-  //     );
-  //   }
-  //   return formGroup;
-  // }
+  getFormGroupQuestions(questions: any): FormGroup[] {
+    if (!questions || questions.length === 0) {
+      return [
+        this.fb.group({
+        id: null,
+        title: [null, Validators.required],
+        question: null,
+        options: null,
+        answer: null,
+
+        })
+      ];
+    }
+
+    const formGroup = [];
+    for (const question of questions) {
+      formGroup.push(
+        this.fb.group({
+          id: question._id,
+          title: [question.title, Validators.required],
+          type: [question.type, Validators.required],
+          question: question.question,
+          options: question.options,
+          answer: question.answer
+        })
+      );
+    }
+    return formGroup;
+  }
+
 
   getFormGroupSections(sections: any): FormGroup[] {
     if (!sections) {
@@ -131,7 +135,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
           id: null,
           title: [null, Validators.required],
           lectures: this.fb.array(this.getFormGroupLectures(null)),
-          // questions: this.fb.array(this.getFormGroupQuestions(null))
+          questions: this.fb.array(this.getFormGroupQuestions(null))
         })
       ];
     }
@@ -143,7 +147,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
           id: section.id,
           title: [section.title, Validators.required],
           lectures: this.fb.array(this.getFormGroupLectures(section.lectures)),
-          // questions: this.fb.array(this.getFormGroupQuestions(section.questions))
+          questions: this.fb.array(this.getFormGroupQuestions(section.questions))
         })
       );
     }
@@ -232,7 +236,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
         id: null,
         title: [null, Validators.required],
         lectures: this.fb.array(this.getFormGroupLectures(null)),
-        // questions: this.fb.array(this.getFormGroupQuestions(null)),
+        questions: this.fb.array(this.getFormGroupQuestions(null)),
       })
     );
   }

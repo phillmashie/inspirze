@@ -50,7 +50,7 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
         'Confirm deletion',
-        'Are you sure you want to delete the section and all the associated lectures?'
+        'Are you sure you want to delete the Module and all the associated lectures and Quiz?'
       ),
       maxWidth: '400px'
     });
@@ -73,30 +73,30 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
       this.fb.group({
         id: null,
         title: [null, Validators.required],
-        type: ['quiz', Validators.required],
-        quiz: null,
         text: null,
       })
     );
   }
 
-  // onAddQuestion() {
-  //   (this.sectionFormGroup.get('questions') as FormArray).push(
-  //     this.fb.group({
-  //       id: null,
-  //       question: [null, Validators.required],
-  //       options: null,
-  //       answer: null
-  //     })
-  //   );
-  // }
+  onAddQuestion() {
+    (this.sectionFormGroup.get('questions') as FormArray).push(
+      this.fb.group({
+        id: null,
+        title: [null, Validators.required],
+        question: null,
+        options: null,
+        answer: null,
+      })
+    );
+  }
+
 
   drop(event: CdkDragDrop<FormGroup[]>) {
     moveItemInArray(this.sectionFormGroup.get('lectures')['controls'], event.previousIndex, event.currentIndex);
     moveItemInArray(this.sectionFormGroup.controls['lectures'].value, event.previousIndex, event.currentIndex);
-    // moveItemInArray(this.sectionFormGroup.get('questions')['controls'], event.previousIndex, event.currentIndex);
-    // moveItemInArray(this.sectionFormGroup.controls['questions'].value, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.sectionFormGroup.get('questions')['controls'], event.previousIndex, event.currentIndex);
+    moveItemInArray(this.sectionFormGroup.controls['questions'].value, event.previousIndex, event.currentIndex);
     this.courseFormGroup.updateValueAndValidity();
   }
-  
+
 }

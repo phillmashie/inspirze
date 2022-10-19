@@ -45,7 +45,7 @@ import { NavComponent } from './shared/nav/nav.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { LoaderComponent } from './shared/ui/loader/loader.component';
 import { CountdownModule } from 'ngx-countdown';
-import { QuizComponent, QuestionTreeComponent } from './courses/create/course-section/quiz/quiz.component';
+import { QuizComponent} from './courses/create/course-section/quiz/quiz.component';
 
 
 
@@ -72,7 +72,6 @@ import { QuizComponent, QuestionTreeComponent } from './courses/create/course-se
     TopBarComponent,
     LoaderComponent,
     QuizComponent,
-    QuestionTreeComponent,
 
 
 

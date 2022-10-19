@@ -1,25 +1,71 @@
+<div [formGroup]="questionFormGroup">
+  <input type="hidden" formControlName="id"/>
 
-<div class="container">
-  <div class="col-lg-12">
-    <h1 class="bd-title" id="content">Question Form </h1><br />
-    <div>
-      <button class="btn btn-primary" (click)="addNewQuestion(0,questions.length)">Add</button>
-  <form  >
-    <div *ngFor="let question of nestedQuestions;let i = index">
-    <div [formGroup]="questionWiseFormGroups[question.parentQuestionId].controls[i]" class="form-group">
-      <label>Question</label>
-      <input type="text" formControlName="question" class="form-control"  />
-      <label>Answer</label>
-      <input type="text" formControlName="answer" class="form-control"  />
-      <button class="btn btn-primary" (click)="addChildQuestion(question)">Add</button>
-      <app-question-tree [title]="question.question" [questionFormArray]="questionFormArray" [questionId]="question.questionId" [questions]="question.questions" [formGroups]="questionWiseFormGroups[question.questionId]"></app-question-tree>
-    </div>
-    </div>
-    <button  class="btn btn-primary" (click)="save()">Submit</button><br/>
+  <input
+    *ngIf="question.type === 'video'"
+    type="hidden"
+    formControlName="videoUrl"
+    required
+  />
 
+  <mat-card class="question-container mb-4">
+    <mat-card-content class="mb-0">
 
-  </form>
-</div>
+      <div class="d-flex justify-content-between mb-2">
+        <div class="d-flex align-items-center">
+          <label class="mr-3">Type</label>
+          <mat-radio-group formControlName="type" required aria-label="Question type">
+            <mat-radio-button value="text">Quiz</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-  </div>
+        <div *ngIf="sectionFormGroup.get('questions')['controls'].length > 1" class="drag-handle">
+          <ng-content></ng-content>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row p-1">
+        <div class="d-flex flex-column flex-grow-1">
+          <div>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Question title"
+                formControlName="title"
+                required
+              >
+              <mat-error *ngIf="questionFormGroup.get('title').hasError('required')">
+                Lecture title is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="quill-material-container" *ngIf="question.type === 'text' && question.title">
+              <quill-material
+                formControlName="text"
+                placeholder="Lecture content"
+                [required]
+              ></quill-material>
+              <mat-error *ngIf="questionFormGroup.get('text').hasError('required')">
+                Quiz content is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="d-flex justify-content-end">
+      <div class="text-right">
+        <button
+          *ngIf="sectionFormGroup.get('questions')['controls'].length > 1"
+          matTooltip="Remove Question"
+          mat-icon-button
+          color="warn"
+          type="button"
+          (click)="onRemoveQuestion(questionIndex)"
+        ><mat-icon>delete_outline</mat-icon></button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
 </div>

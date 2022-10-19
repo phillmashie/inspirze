@@ -4,6 +4,7 @@ import {QuestionAnswer} from './questionanswer';
 
 export class Question implements Deserializable  {
     id?: string;
+    title: string;
     type?: string;
     question?: string;
     options: QuestionOption[];
@@ -21,10 +22,10 @@ export class Question implements Deserializable  {
     // option4?: string;
     // answer?: string;
 
-    
+
 }
 
 //answer cant be part of questions
-//create an obeject 
+//create an obeject
 //options needs to be an array
 //add addtnal interface and link to this object for answers +answers and opptions

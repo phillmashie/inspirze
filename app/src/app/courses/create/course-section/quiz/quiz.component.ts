@@ -1,122 +1,110 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from "@angular/forms"
-import { QUESTIONS } from "./questions"
-var numberCount: number = 0;
-
-@Component({
-  template: ''
-})
-export class BaseComponent{
-
-  @Input() set questions(value:any[]){
-    this.nestedQuestions = value;
-  }
-
-  @Input() questionFormArray:any[] = [];
-
-  nestedQuestions: any[] = [];
-
-  questionWiseFormGroups: { [key: number]: FormArray };
-
-  constructor(public formBuilder:FormBuilder){
-    if(!this.questionFormArray)
-      this.questionFormArray = [];
-  }
-
- get uniqueId() {
-    numberCount = numberCount+ 1;
-    return numberCount;
-  }
-
-  getFormGroup(question: { [key: string]: any }) {
-    return this.formBuilder.group(question);
-  }
-
-  addNewQuestion(arg0: number,arg1: number) {
-    throw new Error('Method not implemented.');
-    }
-
-  addChildQuestion(parentQuestion: any) {
-    let question = { questionId: this.uniqueId, parentQuestionId: parentQuestion.questionId, question: '', answer: '',questions:[] }
-    parentQuestion.questions.push(question)
-    this.addFormGroup(question)
-
-  }
-
-  addFormGroup(question:any){
-    if (!this.questionWiseFormGroups)
-      this.questionWiseFormGroups = { [question.parentQuestionId]: this.formBuilder.array([]) };
-    else if(!this.questionWiseFormGroups[question.parentQuestionId])
-    this.questionWiseFormGroups[question.parentQuestionId] = this.formBuilder.array([])
-
-    let currentFormArray = this.questionWiseFormGroups[question.parentQuestionId]
-    currentFormArray.push(this.getFormGroup(question));;
-    this.questionFormArray.push(currentFormArray.controls[currentFormArray.controls.length -1]);
-
-  }
-
-
-}
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { FormGroup, FormArray, ValidationErrors } from '@angular/forms';
+import { CoursesService } from '../../../courses.service';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Subject, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { Question } from '../../../../interfaces/question';
 
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.sass']
 })
-export class QuizComponent extends BaseComponent implements OnInit {
+export class QuizComponent implements OnInit, OnDestroy {
+  changeVideoSubject: Subject<void> = new Subject<void>();
 
+  @Input() questionFormGroup: FormGroup;
+  @Input() sectionFormGroup: FormGroup;
+  @Input() courseFormGroup: FormGroup;
+  @Input() questionIndex: number;
+  @Input() sectionIndex: number;
 
+  formChangesSubscription: Subscription;
+
+  progress = 0;
+  successMsg = '';
+  question: Question;
+  sectionId: string;
+  courseId: string;
+
+  backendURL = environment.backendURL;
 
   constructor(
-     formBuilder: FormBuilder) {
-      super(formBuilder)
-      }
+    private coursesService: CoursesService,
+    private notificationService: NotificationService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
-    let question = { questionId: this.uniqueId, parentQuestionId: 0, question: 'abc', answer: '', questions: [] }
-    this.questions = [question];
-    this.addFormGroup(question);
+    this.question = new Question().deserialize(this.questionFormGroup.value);
+    this.sectionId = this.sectionFormGroup.get('id').value;
+    this.courseId = this.courseFormGroup.get('id').value;
+    this.formChangesSubscription = this.subcribeToFormChanges();
   }
 
-  save(){
-    var serverData = [];
-    this.questionFormArray.forEach(t=>serverData.push(t.value));
-    console.log(serverData)
+  ngOnDestroy(): void {
+    this.formChangesSubscription.unsubscribe();
+  }
+
+  subcribeToFormChanges() {
+    const formValueChanges$ = this.questionFormGroup.valueChanges;
+    return formValueChanges$.subscribe(formValue => { this.question = new Question().deserialize(formValue); this.getFormValidationErrors()});
+  }
+
+  getFormValidationErrors() {
+    // tslint:disable-next-line: forin
+    for (const control in this.questionFormGroup.controls) {
+      console.log(control)
+      if (this.courseFormGroup.get(control)) {
+        const controlErrors: ValidationErrors = this.courseFormGroup.get(control).errors;
+        if (controlErrors != null) {
+          Object.keys(controlErrors).forEach(keyError => {
+            console.log('Key control: ' + control + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+          });
+        }
+      }
+    };
+
+
+
+    // for (const i in this.courseFormGroup.controls.sections['controls']) {
+    //   for (const control in this.courseFormGroup.controls.sections['controls'][i]['controls']) {
+    //     const controlErrors: ValidationErrors = this.courseFormGroup.controls.sections['controls'][i]['controls'][control].errors;
+    //     if (controlErrors != null) {
+    //       Object.keys(controlErrors).forEach(keyError => {
+    //         console.log('Key control: ' + control + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+    //       });
+    //     }
+    //   }
+    // }
   }
 
 
-}
+  onRemoveQuestion(questionIndex: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogModel(
+        'Confirm deletion',
+        'Are you sure you want to delete the Question?'
+      ),
+      maxWidth: '400px'
+    });
 
-@Component({
-  selector: 'app-question-tree',
-  template: `
-  <h1>{{title}}</h1>
-  <div   *ngFor="let question of nestedQuestions;let i = index">
-  <div [formGroup]="formGroups.controls[i]">
-     <label>Question</label>
-      <input type="text" formControlName="question" class="form-control"  />
-      <label>Answer</label>
-      <input type="text" formControlName="answer" class="form-control"  />
-      </div>
-      <button class="btn btn-primary" (click)="addChildQuestion(question)">Add</button>
-      <app-question-tree  [questionFormArray]="questionFormArray" [questionId]="question.questionId" [questions]="question.questions" [formGroups]="questionWiseFormGroups[question.questionId]"></app-question-tree>
-    </div>
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.coursesService
+          .deleteQuestion(this.question.id)
+          .subscribe(res => {
+            const control = this.sectionFormGroup.get('questions') as FormArray;
+            control.removeAt(questionIndex);
+            this.notificationService.showSuccess('Question successfully deleted');
+          });
 
+      }
+    });
+  }
 
-
-  `,
-})
-export class QuestionTreeComponent extends BaseComponent {
-    parentQuestionId:number;
-    @Input() formGroups:FormArray;
-
-    @Input() set questionId(value:number){
-      this.parentQuestionId = value;
-      this.questionWiseFormGroups = {[value]:this.formBuilder.array([])     }
-    }
-
-    @Input() title:string
-
-    constructor(formBuilder:FormBuilder){
-      super(formBuilder)
-    }
 }
