@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormArray, ValidationErrors, FormBuilder } from '@angular/forms';
 import { CoursesService } from '../../../courses.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -36,7 +36,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   constructor(
     private coursesService: CoursesService,
     private notificationService: NotificationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -81,6 +82,24 @@ export class QuizComponent implements OnInit, OnDestroy {
     //     }
     //   }
     // }
+  }
+
+  get optionsFieldAsFormArray(): any {
+    return this.questionFormGroup.get('options') as FormArray;
+  }
+
+  options(): any {
+    return this.fb.group({
+      options: this.fb.control(''),
+    });
+  }
+
+  addControl(): void {
+    this.optionsFieldAsFormArray.push(this.options());
+  }
+
+  remove(i: number): void {
+    this.optionsFieldAsFormArray.removeAt(i);
   }
 
 

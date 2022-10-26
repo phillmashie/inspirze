@@ -20,7 +20,27 @@
 
     <div style="margin-top:15px" *ngIf="enrolledCourses?.length">
 
-        <table class="table">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let data of enrolledCourses">
+          <mat-card class="course-card">
+            <a [routerLink]="['/course/edit', data.courseCode]">
+              <img mat-card-image src="../../../assets/course.png" alt="{{ data.title }}">
+            </a>
+            <mat-card-content>
+              <a [routerLink]="['/course/edit', data.courseCode]">
+                <h2>{{ data.title }}</h2>
+              </a>
+              <p>{{ data.subtitle }}</p>
+              <p> {{data.students.length}} </p>
+            </mat-card-content>
+            <mat-card-actions class="d-flex justify-content-between">
+              <a [routerLink]="['details']" [queryParams]="{id: data._id}" class="btn btn-outline-primary">View Details</a>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+        <!-- <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Course Code</th>
@@ -43,7 +63,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
     <!-- end div containing table courses the authenticated student is enrolled in -->
 </div>
@@ -52,35 +72,33 @@
     <h4>Available Courses</h4>
 
     <!-- ONLY DISPLAY COURSES BELOW WHICH THE STUDENT IS NOT ALREADY ENROLLED IN! -->
-    <div style=" margin-top:15px " *ngIf="availableCourses?.length ">
-        <table class="table ">
-            <thead class="thead-dark ">
-                <tr>
-                    <th scope="col ">Course Code</th>
-                    <th scope="col ">Title</th>
-                    <th scope="col ">Sub Title</th>
-                    <th scope="col ">Description</th>
-                    <th scope="col">Number of Students</th>
-                    <th scope="col "></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of availableCourses ">
-                    <th scope="row ">{{ data.courseCode }}</th>
-                    <td>{{ data.title }}</td>
-                    <td>{{ data.subtitle }}</td>
-                    <td>{{ data.description }}</td>
-                    <td>{{ data.students.length }}</td>
-                    <td>
-                        <a [routerLink]="[ 'details'] " [queryParams]="{id: data.id} " class="btn btn-outline-primary
-    " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
 
-                        <!-- ADMIN ONLY BUTTON -->
-                        <a (click)="deleteCourse(data.id, data.courseCode) " class="btn btn-outline-danger " *ngIf='isAdmin'>Delete Course</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div style=" margin-top:15px " *ngIf="availableCourses?.length ">
+
+        <div class="row">
+            <div class="col-md-4" *ngFor="let data of availableCourses">
+              <mat-card class="course-card">
+                <a [routerLink]="['/course/edit', data.courseCode]">
+                  <img mat-card-image src="../../../assets/course.png" alt="{{ data.title }}">
+                </a>
+                <mat-card-content>
+                  <a [routerLink]="['/course/edit', data.courseCode]">
+                    <h2>{{ data.title }}</h2>
+                  </a>
+                  <p>{{ data.subtitle }}</p>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-between">
+                    <a [routerLink]="[ 'details'] " [queryParams]="{id: data.id} " class="btn btn-outline-primary
+                    " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
+
+                    <!--ADMIN ONLY BUTTON -->
+                       <a (click)="deleteCourse(data.id, data.courseCode) " class="btn btn-outline-danger " *ngIf='isAdmin'>Delete Course</a>
+                </mat-card-actions>
+              </mat-card>
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
     </div>
     <!-- end div containing table of avail courses -->
 </div>

@@ -30,11 +30,11 @@
             <mat-form-field>
               <input
                 matInput
-                placeholder="Question title"
-                formControlName="title"
+                placeholder="Question"
+                formControlName="question"
                 required
               >
-              <mat-error *ngIf="questionFormGroup.get('title').hasError('required')">
+              <mat-error *ngIf="questionFormGroup.get('question').hasError('required')">
                 Lecture title is <strong>required</strong>
               </mat-error>
             </mat-form-field>
@@ -49,6 +49,29 @@
                 Quiz content is <strong>required</strong>
               </mat-error>
             </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Answer"
+                formControlName="answer"
+                required
+              >
+              <mat-error *ngIf="questionFormGroup.get('answer').hasError('required')">
+                Correct Answer is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <div *ngFor="let control of  optionsFieldAsFormArray.controls ;let i = index;" formArrayName='options' >
+              <div [formGroupName]="i" >
+                  <div  class="input-field" >
+                  <input matInput type="text"
+                      placeholder="Answer Option" formControlName="options" >
+                  </div>
+                  <button class="button" type="button" (click)="remove(i)" >Remove</button>
+              </div>
+          </div>
+          <button  class="button" (click)="addControl()" > Add Answer Option</button>
 
           </div>
         </div>

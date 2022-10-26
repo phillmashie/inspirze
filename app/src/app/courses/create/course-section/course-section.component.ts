@@ -23,6 +23,7 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
 
   private section: Section;
   private courseId: string;
+  form: any;
 
   constructor(
     private courseService: CoursesService,
@@ -84,11 +85,12 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
         id: null,
         title: [null, Validators.required],
         question: null,
-        options: null,
+        options: this.fb.array([]),
         answer: null,
       })
     );
   }
+
 
 
   drop(event: CdkDragDrop<FormGroup[]>) {
