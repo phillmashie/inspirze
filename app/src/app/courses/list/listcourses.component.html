@@ -40,30 +40,6 @@
         </div>
       </div>
 
-        <!-- <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Course Code</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Sub Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Number of Students</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of enrolledCourses">
-                    <th scope="row">{{ data.courseCode }}</th>
-                    <td>{{ data.title }}</td>
-                    <td>{{ data.subtitle }}</td>
-                    <td [innerHTML]="data.description">{{ data.description }}</td>
-                    <td>{{ data.students.length }}</td>
-                    <td>
-                        <a [routerLink]="['details']" [queryParams]="{id: data._id}" class="btn btn-outline-primary">View Details</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table> -->
     </div>
     <!-- end div containing table courses the authenticated student is enrolled in -->
 </div>
