@@ -27,7 +27,7 @@
               <img mat-card-image src="../../../assets/course.png" alt="{{ data.title }}">
             </a>
             <mat-card-content>
-              <a [routerLink]="['/course/edit', data.courseCode]">
+              <a [routerLink]="['/courses/details', data.courseCode]">
                 <h2>{{ data.title }}</h2>
               </a>
               <p>{{ data.subtitle }}</p>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-md-4" *ngFor="let data of availableCourses">
               <mat-card class="course-card">
-                <a [routerLink]="['/course/edit', data.courseCode]">
+                <a [routerLink]="['/courses/details', data.courseCode]">
                   <img mat-card-image src="../../../assets/course.png" alt="{{ data.title }}">
                 </a>
                 <mat-card-content>

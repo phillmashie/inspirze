@@ -47,6 +47,8 @@
       Add lecture
     </button>
 
+    <mat-divider class="mt-3 mb-3"></mat-divider>
+
     <div cdkDropList (cdkDropListDropped)="drop($event)">
       <div
         *ngFor="let question of sectionFormGroup.get('questions')['controls']; let i = index;"
