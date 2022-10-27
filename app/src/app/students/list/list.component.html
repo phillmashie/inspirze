@@ -10,6 +10,27 @@
 </div>
 
 <div style="margin-top:15px" *ngIf="student?.length">
+<!--
+  <div class="row">
+    <div class="col-md-4" *ngFor="let stud of student">
+      <mat-card class="course-card">
+        <a [routerLink]="['/course/edit', stud.studentNumber]">
+          <img mat-card-image src="../../../assets/19664321.jpeg" alt="{{ stud.firstName }}">
+        </a>
+        <mat-card-content>
+          <a [routerLink]="['/course/edit', stud.studentNumber]">
+            <h2>{{ stud.firstName }} {{ stud.lastName }} </h2>
+          </a>
+          <p>{{stud.program  }}</p>
+        </mat-card-content>
+        <mat-card-actions class="d-flex justify-content-between">
+          <a [routerLink]="['details']" [queryParams]="{id: stud._id}" class="btn btn-outline-primary" [ngClass]="{'pull-left':this._authService.isAdmin()}">View Profile</a>
+          <a (click)="delete(stud._id, stud.studentNumber)" class="btn btn-outline-danger" *ngIf='this._authService.isAdmin()'>Delete Student</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div> -->
+
   <table class="table">
     <thead class="thead-dark">
       <tr>

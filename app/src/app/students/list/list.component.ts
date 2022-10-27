@@ -4,6 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { Student } from '../../interfaces/student';
 import { AlertService } from '../../alert/alert.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +18,9 @@ export class ListComponent implements OnInit {
   constructor(
     public _authService: AuthenticationService,
     public _alertService: AlertService,
-    public _studentsService: StudentsService) {
+    public _studentsService: StudentsService,
+    private dialog: MatDialog
+    ) {
   }
 
   ngOnInit() {
