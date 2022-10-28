@@ -32,6 +32,8 @@
               </a>
               <p>{{ data.subtitle }}</p>
               <p> {{data.students.length}} </p>
+              <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+
             </mat-card-content>
             <mat-card-actions class="d-flex justify-content-between">
               <a [routerLink]="['details']" [queryParams]="{id: data._id}" class="btn btn-outline-primary">View Details</a>
@@ -63,6 +65,8 @@
                   </a>
                   <p>{{ data.subtitle }}</p>
                   <p>{{ data.students.length }}</p>
+                  <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+
                 </mat-card-content>
                 <mat-card-actions class="d-flex justify-content-between">
                     <a [routerLink]="[ 'details'] " [queryParams]="{id: data.id} " class="btn btn-outline-primary

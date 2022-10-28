@@ -46,6 +46,7 @@ import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { LoaderComponent } from './shared/ui/loader/loader.component';
 import { CountdownModule } from 'ngx-countdown';
 import { QuizComponent} from './courses/create/course-section/quiz/quiz.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 
@@ -95,7 +96,8 @@ import { QuizComponent} from './courses/create/course-section/quiz/quiz.componen
     QuillModule.forRoot(),
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    CountdownModule
+    CountdownModule,
+    MatProgressBarModule
   ],
   providers: [
     AuthGuard,
