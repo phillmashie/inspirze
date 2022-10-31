@@ -150,6 +150,7 @@
                      message: getErrorMessage(err)
                  });
              } else {
+                console.log(courseId);
                  Course.findOneAndUpdate(
                      { _id: courseId },
                      { $push: { students: s?._id } },
@@ -160,6 +161,7 @@
                                  message: getErrorMessage(err)
                              });
                          } else {
+                          
                              console.log(`Successfully added course (${c?.courseCode}) to student (#${s?.studentNumber}) ...`);
                              res.json(c);
                          }
