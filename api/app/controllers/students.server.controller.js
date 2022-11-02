@@ -142,7 +142,7 @@
  
      Student.findOneAndUpdate(
          { _id: studentId },
-         { $push: { courses: courseId } },
+         { $push: { course: courseId } },
          { new: true },
          (err, s) => {
              if (err) {
@@ -150,7 +150,7 @@
                      message: getErrorMessage(err)
                  });
              } else {
-                console.log(courseId);
+                console.log("Course Id " + courseId);
                  Course.findOneAndUpdate(
                      { _id: courseId },
                      { $push: { students: s?._id } },
@@ -197,7 +197,7 @@
                                  message: getErrorMessage(err)
                              });
                          } else {
-                             console.log(`Successfully dropped course (${c.courseCode}) from student (#${s.studentNumber}) ...`);
+                             console.log(`Successfully dropped course (${c?.courseCode}) from student (#${s.studentNumber}) ...`);
                              res.json(c);
                          }
                      }

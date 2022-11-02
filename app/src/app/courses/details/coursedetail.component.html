@@ -36,6 +36,8 @@
       </div>
   </div>
 
+
+
   <!-- Display list of students not currently enrolled in this class -->
   <div *ngIf='showNotEnrolledStudents' class="row justify-content-center pb-3">
       <div class="card col-md" *ngFor="let student of notEnrolledStudents">
@@ -97,6 +99,13 @@
                   </span>
               </p>
           </div>
+
+          <mat-paginator
+              [length]="10"
+              [pageSize]="10"
+              [pageSizeOptions]="[1, 2, 5, 10]"
+              aria-label="Select page"
+          ></mat-paginator>
       </ng-template>
   </div>
 
