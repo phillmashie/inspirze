@@ -47,6 +47,7 @@ import { LoaderComponent } from './shared/ui/loader/loader.component';
 import { CountdownModule } from 'ngx-countdown';
 import { QuizComponent} from './courses/create/course-section/quiz/quiz.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PaginationComponent } from './courses/pagination/pagination.component';
 
 
 
@@ -73,6 +74,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     TopBarComponent,
     LoaderComponent,
     QuizComponent,
+    PaginationComponent,
 
 
 
