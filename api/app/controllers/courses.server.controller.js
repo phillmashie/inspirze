@@ -18,6 +18,15 @@
  // Get list of courses
  module.exports.GetCourses = function (req, res, next) {
     const courseId = req.params.courseId;
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.currentpage;   
+    const courseQuery = Course.find();
+    if (pageSize && currentPage) {
+        courseQuery
+        .skip(pageSize * (currentPage - 1))
+        .limit(pageSize);
+
+    }
     Course.find({courses: { $ne: courseId }},(err, courses) => {
         if (err) {
             console.log(err);
@@ -101,6 +110,15 @@
  
  module.exports.GetOneCourse = function (req, res, next) {
      let id = req.params.id;
+     const pageSize = +req.query.pagesize;
+     const currentPage = +req.query.currentpage;
+     const courseQuery = Course.findOne;
+     if (pageSize && currentPage) {
+         courseQuery
+         .skip(pageSize * (currentPage - 1))
+         .limit(pageSize);
+ 
+     }
  
      Course.findOne({ _id: id })
          .populate('students')

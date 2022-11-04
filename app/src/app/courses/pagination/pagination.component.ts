@@ -6,6 +6,7 @@ import { Course } from '../../interfaces/course';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { StudentsService } from '../../students/students.service';
 import { AlertService } from '../../alert/alert.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-pagination',
@@ -19,6 +20,9 @@ export class PaginationComponent implements OnInit {
   course: any = Course;
   isAdminView: Boolean;
   hasStudents: Boolean;
+  totalLectures = 10;
+  lecturesPerPage = 2;
+  lectureSizeOptions = [1, 2, 5, 10];
 
   isEnrolled: Boolean;
   showNotEnrolledStudents: Boolean;
@@ -62,6 +66,10 @@ export class PaginationComponent implements OnInit {
         this.ngOnInit();
         (        error: string) => this._alertService.error(error);
       });
+  }
+
+  onChangePage(pageData : PageEvent) {
+    console.log(pageData);
   }
 
   // can't do this because typescript doesn't let me overload...

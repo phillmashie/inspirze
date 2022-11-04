@@ -24,9 +24,10 @@
   </div>
   <!--Bottons to be added here-->
   <mat-paginator
-  [length]="10"
-  [pageSize]="10"
-  [pageSizeOptions]="[1, 2, 5, 10]"
+  [length]="totalLectures"
+  [pageSize]="lecturesPerPage"
+  [pageSizeOptions]="lectureSizeOptions"
+  (page) ="onChangePage($event)"
   aria-label="Select page"
 ></mat-paginator>
   </div>
