@@ -1,1 +1,32 @@
-<p>pagination works!</p>
+<div style="margin-top:20px">
+  <h4>{{ course?.title }}</h4>
+  <div class="row justify-content-center">
+      <div class="col-md-7">
+          <hr />
+          <table class="table table-striped" align="center">
+              <tbody class="text-left">
+                  <tr>
+                      <td>
+                          <b>Course Code</b>: {{ course?.courseCode }}</td>
+                      <td style="padding-left: 40px">
+                          <b>Course Title</b>: {{ course?.title }}</td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <b>Subtitle</b>: {{ course?.subtitle }}</td>
+                      <td style="padding-left: 40px">
+                         <p> <b>Description</b>: {{ course?.description }} </p></td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+  </div>
+  <!--Bottons to be added here-->
+  <mat-paginator
+  [length]="10"
+  [pageSize]="10"
+  [pageSizeOptions]="[1, 2, 5, 10]"
+  aria-label="Select page"
+></mat-paginator>
+  </div>
