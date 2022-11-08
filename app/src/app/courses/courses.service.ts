@@ -199,7 +199,10 @@ export class CoursesService {
     }
 
     getCourse(id: any): Observable<any>  {
-        return this._http.get(this._courseBaseURL + '/' + id);
+      // const queryParams = `?pagesize=${lecturesPerPage}&page=${currentPage}`;
+      //, lecturesPerPage: number, currentPage: number
+
+        return this._http.get(this._courseBaseURL + '/' + id) ;
 
     }
 

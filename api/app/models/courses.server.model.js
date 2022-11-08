@@ -32,9 +32,9 @@
         required: false,
         default: 0
       },
-      module: [{
+      section: [{
       type: mongoose.Schema.ObjectId,
-      ref: 'Modules'
+      ref: 'Sections'
     }],  
      students: [
          {
