@@ -21,10 +21,11 @@ export class DetailsComponent implements OnInit {
         private _authService: AuthenticationService,
         private _studentsService: StudentsService) {
         this._route.queryParams.subscribe(params => this.studentId = params['_id']);
+
     }
 
     ngOnInit() {
-
+      console.log(this.studentId);
         this._studentsService
             .getStudent(this.studentId)
             .subscribe(( res :any ) => {

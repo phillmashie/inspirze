@@ -69,7 +69,7 @@
 
                 </mat-card-content>
                 <mat-card-actions class="d-flex justify-content-between">
-                    <a [routerLink]="[ 'details'] " [queryParams]="{id: data.id} " class="btn btn-outline-primary
+                    <a [routerLink]="[ 'pages'] " [queryParams]="{id: data.id} " class="btn btn-outline-primary
                     " [ngClass]="{ 'pull-left':this._authService.isAdmin()} ">View Details</a>
 
                     <!--ADMIN ONLY BUTTON -->
@@ -77,10 +77,12 @@
                 </mat-card-actions>
               </mat-card>
               <mat-divider></mat-divider>
+
             </div>
           </div>
 
     </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <!-- end div containing table of avail courses -->
 </div>
 <!-- end available courses div -->

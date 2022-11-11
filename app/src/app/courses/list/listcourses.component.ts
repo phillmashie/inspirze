@@ -1,10 +1,13 @@
 import { CoursesService } from '../courses.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Course } from '../../interfaces/course';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { AlertService } from '../../alert/alert.service';
 import { StudentsService } from '../../students/students.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -19,16 +22,22 @@ export class ListCoursesComponent implements OnInit {
   currentStudentId: String;
   isAdmin: Boolean;
 
+
+
   constructor(
     public _authService: AuthenticationService,
     public _studentService: StudentsService,
     public _alertService: AlertService,
     public _coursesService: CoursesService,
-    private dialog: MatDialog,) {
+    private dialog: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef,) {
 
   }
 
   ngOnInit() {
+    this.changeDetectorRef.detectChanges();
+    this.dataSource.paginator = this.paginator;
+    this.obs = this.dataSource.connect();
 
     this.currentStudentId = this._authService.getStudent()?._id;
 
@@ -51,7 +60,17 @@ export class ListCoursesComponent implements OnInit {
         this.availableCourses = data;
         console.log(data);
       });
-  
+
+  }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  obs: Observable<any>;
+  dataSource: MatTableDataSource<Course> = new MatTableDataSource<Course>();
+
+  ngOnDestroy() {
+    if (this.dataSource) {
+      this.dataSource.disconnect();
+    }
   }
 
   deleteCourse(id: any, code: String) {

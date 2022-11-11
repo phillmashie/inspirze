@@ -30,21 +30,8 @@
 
             <!-- froala text editor intergration into course form -->
 
-<!--
-            <mat-form-field class="app-floalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
-              <quill-material
-                formControlName="description"
-                placeholder="Description"
-                [required]
-              ></quill-material>
-              <mat-error *ngIf="courseFormGroup.get('description').hasError('required')">
-                Description is <strong>required</strong>
-              </mat-error>
-            </mat-form-field> -->
 
-             <!-- Quil material editor intergration into course form -->
-
-            <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
+            <mat-form-field class="app-froalaeditor-container" *ngIf="lecture.type === 'text' && lecture.title">
               <quill-material
                 formControlName="text"
                 placeholder="Lecture content"
@@ -54,6 +41,19 @@
                 Lecture content is <strong>required</strong>
               </mat-error>
             </mat-form-field>
+
+             <!-- Quil material editor intergration into course form -->
+
+            <!-- <mat-form-field class="quill-material-container" *ngIf="lecture.type === 'text' && lecture.title">
+              <quill-material
+                formControlName="text"
+                placeholder="Lecture content"
+                [required]
+              ></quill-material>
+              <mat-error *ngIf="lectureFormGroup.get('text').hasError('required')">
+                Lecture content is <strong>required</strong>
+              </mat-error>
+            </mat-form-field> -->
 
           </div>
         </div>
