@@ -90,6 +90,6 @@
  // authenticates the password
  studentsSchema.methods.authenticate = function (password) {
      return this.password === this.hashPassword(password);
- }
+ }          
  
  module.exports = mongoose.model('Students', studentsSchema);
