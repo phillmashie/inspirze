@@ -10,11 +10,13 @@ import { DetailsComponent } from './details/details.component';
 import { StudentsService } from './students.service';
 import { routing } from '../app.routing';
 import { UpdateComponent } from './update/update.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    NgxPaginationModule,
     routing
   ],
   declarations: [CreateComponent, StudentsComponent, ListComponent, DetailsComponent, UpdateComponent],

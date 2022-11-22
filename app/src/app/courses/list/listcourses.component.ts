@@ -21,6 +21,9 @@ export class ListCoursesComponent implements OnInit {
   enrolledCourses: Course[];
   currentStudentId: String;
   isAdmin: Boolean;
+  p: number = 1;
+  itemsPerPage: number = 6;
+  totalCourses: any;
 
 
 
@@ -58,6 +61,7 @@ export class ListCoursesComponent implements OnInit {
     this._studentService.getAvailableCourses(this.currentStudentId)
       .subscribe(( data : any)  => {
         this.availableCourses = data;
+        this.totalCourses = data.length;
         console.log(data);
       });
 

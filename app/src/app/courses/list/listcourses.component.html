@@ -54,7 +54,7 @@
     <div style=" margin-top:15px " *ngIf="availableCourses?.length ">
 
         <div class="row">
-            <div class="col-md-4" *ngFor="let data of availableCourses">
+            <div class="col-md-4" *ngFor="let data of availableCourses | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
               <mat-card class="course-card">
                 <a [routerLink]="['/courses/details', data.courseCode]">
                   <img mat-card-image src="../../../assets/course.png" alt="{{ data.title }}">
@@ -81,8 +81,11 @@
             </div>
           </div>
 
+          <div>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </div>
+
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <!-- end div containing table of avail courses -->
 </div>
 <!-- end available courses div -->

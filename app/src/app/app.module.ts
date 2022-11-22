@@ -48,6 +48,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { QuizComponent} from './courses/create/course-section/quiz/quiz.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PaginationComponent } from './courses/pagination/pagination.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -80,6 +81,7 @@ import { PaginationComponent } from './courses/pagination/pagination.component';
 
   ],
   imports: [
+    NgxPaginationModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -99,7 +101,8 @@ import { PaginationComponent } from './courses/pagination/pagination.component';
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
     CountdownModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+
   ],
   providers: [
     AuthGuard,
