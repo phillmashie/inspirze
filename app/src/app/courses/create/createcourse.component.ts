@@ -11,6 +11,7 @@ import { Course } from '../../interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
 import { Subscription } from 'rxjs';
+import { BooleanInput } from '@angular/cdk/coercion';
 
  @Component({
    selector: 'app-createcourse',
@@ -56,6 +57,7 @@ export class CreateCourseComponent implements OnInit, OnDestroy, AfterContentChe
   editMode = false;
   formValueHasChanged = false;
   private originalFormValue: any;
+isLinear = false;
 
 
   constructor(

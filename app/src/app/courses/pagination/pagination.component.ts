@@ -60,7 +60,7 @@ export class PaginationComponent implements OnInit {
   enrollInCourse(studentId?: String, studentNumber?: Number) {
     this._studentsService
       // admin ? use arg : use authenticated student's id
-      .enrollInCourse({ courseId: this?.courseId, studentId: studentId ? studentId : this.currentStudent?._id })
+      .enrollInCourse({ courseId: this.courseId, studentId: studentId ? studentId : this.currentStudent?._id })
       .subscribe(() => {
         this._alertService.success(`Student (#${studentNumber ? studentNumber : this.currentStudent.studentNumber}) has successfully registered in this course (${this.course.courseCode})!`, false);
         this.ngOnInit();

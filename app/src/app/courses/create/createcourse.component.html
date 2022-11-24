@@ -2,16 +2,20 @@
   <span *ngIf="!editMode">Create course</span>
   <span *ngIf="editMode">Edit course</span>
 </h1>
-
+<mat-stepper [linear]="isLinear" #stepper>
 <form [formGroup]="courseFormGroup" novalidate (ngSubmit)="onSubmit()" *ngIf="!editMode || (editMode && course)">
+
   <input
     *ngIf="editMode"
     type="hidden"
     formControlName="id"
   />
+
   <div class="row">
+    <mat-step >
     <div >
-      <mat-form-field>
+      <ng-template matStepLabel>Fill The Course Details</ng-template>
+      <mat-form-field appearance="fill">
         <input
           matInput
           placeholder="Course Code"
@@ -68,9 +72,15 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
     </div>
+  </mat-step>
 
-    <div>
+  <mat-step  label="Adding Modules and Lectures">
+
+    <div [formGroup]="courseFormGroup">
       <h4>Modules</h4>
       <mat-accordion formArrayName="sections" multi="true">
         <mat-expansion-panel
@@ -107,11 +117,29 @@
         Add Module
       </button>
 
-    </div>
-  </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
 
-  <app-bottom-toolbar [class]="'d-flex'">
-    <div class="container d-flex justify-content-between">
+    </div>
+
+  </mat-step>
+  </div>
+  <mat-step  label="Adding Quiz">
+    <div>
+
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div >
       <button
         mat-raised-button
         type="button"
@@ -123,5 +151,8 @@
         type="submit"
       >SUBMIT</button>
     </div>
-  </app-bottom-toolbar>
+
+</mat-step>
 </form>
+</mat-stepper>
+
