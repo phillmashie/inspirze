@@ -138,7 +138,7 @@ isLinear = false;
           id: null,
           title: [null, Validators.required],
           lectures: this.fb.array(this.getFormGroupLectures(null)),
-          questions: this.fb.array(this.getFormGroupQuestions(null))
+
         })
       ];
     }
@@ -150,7 +150,32 @@ isLinear = false;
           id: section.id,
           title: [section.title, Validators.required],
           lectures: this.fb.array(this.getFormGroupLectures(section.lectures)),
-          questions: this.fb.array(this.getFormGroupQuestions(section.questions))
+
+        })
+      );
+    }
+
+    return formGroup;
+  }
+
+  getFormGroupQuiz(quizs: any): FormGroup[] {
+    if (!quizs) {
+      return [
+        this.fb.group({
+          id: null,
+          title: [null, Validators.required],
+          questions: this.fb.array(this.getFormGroupQuestions(null))
+        })
+      ];
+    }
+
+    const formGroup = [];
+    for (const quiz of quizs) {
+      formGroup.push(
+        this.fb.group({
+          id: quiz.id,
+          title: [quiz.title, Validators.required],
+          questions: this.fb.array(this.getFormGroupQuestions(quiz.questions))
         })
       );
     }
@@ -169,7 +194,8 @@ isLinear = false;
       title: [course.title, Validators.required],
       subtitle: [course.subtitle, Validators.required],
       description: [course.description, Validators.required],
-      sections: this.fb.array(this.getFormGroupSections(course.sections))
+      sections: this.fb.array(this.getFormGroupSections(course.sections)),
+      quizs: this.fb.array(this.getFormGroupQuiz(course.quizs))
     });
 
     this.originalFormValue = formGroup.value;
@@ -239,6 +265,15 @@ isLinear = false;
         id: null,
         title: [null, Validators.required],
         lectures: this.fb.array(this.getFormGroupLectures(null)),
+      })
+    );
+  }
+
+  onAddQuiz() {
+    (this.courseFormGroup.get('quizs') as FormArray).push(
+      this.fb.group({
+        id: null,
+        title: [null, Validators.required],
         questions: this.fb.array(this.getFormGroupQuestions(null)),
       })
     );

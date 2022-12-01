@@ -1,4 +1,3 @@
-import { Section } from './../../../interfaces/section';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
@@ -8,20 +7,22 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CoursesService } from './../../courses.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Subscription } from 'rxjs';
+import { Quiz } from 'src/app/interfaces/quiz';
 
 @Component({
-  selector: 'app-course-section',
-  templateUrl: './course-section.component.html',
-  styleUrls: ['./course-section.component.sass']
+  selector: 'app-course-quiz',
+  templateUrl: './course-quiz.component.html',
+  styleUrls: ['./course-quiz.component.css']
 })
-export class CourseSectionComponent implements OnInit, OnDestroy {
-  @Input() sectionFormGroup: FormGroup;
+export class CourseQuizComponent implements OnInit {
+
+  @Input() quizFormGroup: FormGroup;
   @Input() courseFormGroup: FormGroup;
-  @Input() sectionIndex: number;
+  @Input() quizIndex: number;
 
   formChangesSubscription: Subscription;
 
-  private section: Section;
+  private quiz: Quiz;
   private courseId: string;
   form: any;
 
@@ -33,7 +34,7 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.section = new Section().deserialize(this.sectionFormGroup.value);
+    this.quiz = new Quiz().deserialize(this.quizFormGroup.value);
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
   }
@@ -43,15 +44,15 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
   }
 
   subcribeToFormChanges() {
-    const formValueChanges$ = this.sectionFormGroup.valueChanges;
-    return formValueChanges$.subscribe(formValue => { this.section = new Section().deserialize(formValue); });
+    const formValueChanges$ = this.quizFormGroup.valueChanges;
+    return formValueChanges$.subscribe(formValue => { this.quiz = new Quiz().deserialize(formValue); });
   }
 
-  onRemoveSection(index: number) {
+  onRemoveQuiz(index: number) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogModel(
         'Confirm deletion',
-        'Are you sure you want to delete the Module and all the associated lectures and Quiz?'
+        'Are you sure you want to delete the Quiz?'
       ),
       maxWidth: '400px'
     });
@@ -59,22 +60,24 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.courseService
-          .deleteSection(this.section.id, this.courseId)
+          .deleteSection(this.quiz.id, this.courseId)
           .subscribe(res => {
-            const control = this.courseFormGroup.get('sections') as FormArray;
+            const control = this.courseFormGroup.get('quizs') as FormArray;
             control.removeAt(index);
-            this.notificationService.showSuccess('Lecture successfully deleted');
+            this.notificationService.showSuccess('Questions successfully deleted');
           });
       }
     });
   }
 
-  onAddLecture() {
-    (this.sectionFormGroup.get('lectures') as FormArray).push(
+  onAddQuestion() {
+    (this.quizFormGroup.get('questions') as FormArray).push(
       this.fb.group({
         id: null,
         title: [null, Validators.required],
-        text: null,
+        question: null,
+        options: this.fb.array([]),
+        answer: null,
       })
     );
   }
@@ -82,8 +85,8 @@ export class CourseSectionComponent implements OnInit, OnDestroy {
 
 
   drop(event: CdkDragDrop<FormGroup[]>) {
-    moveItemInArray(this.sectionFormGroup.get('lectures')['controls'], event.previousIndex, event.currentIndex);
-    moveItemInArray(this.sectionFormGroup.controls['lectures'].value, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.quizFormGroup.get('questions')['controls'], event.previousIndex, event.currentIndex);
+    moveItemInArray(this.quizFormGroup.controls['questions'].value, event.previousIndex, event.currentIndex);
     this.courseFormGroup.updateValueAndValidity();
   }
 

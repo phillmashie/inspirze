@@ -19,7 +19,7 @@
           </mat-radio-group>
         </div>
 
-        <div *ngIf="sectionFormGroup.get('questions')['controls'].length > 1" class="drag-handle">
+        <div *ngIf="quizFormGroup.get('questions')['controls'].length > 1" class="drag-handle">
           <ng-content></ng-content>
         </div>
       </div>
@@ -81,7 +81,7 @@
     <mat-card-actions class="d-flex justify-content-end">
       <div class="text-right">
         <button
-          *ngIf="sectionFormGroup.get('questions')['controls'].length > 1"
+          *ngIf="quizFormGroup.get('questions')['controls'].length > 1"
           matTooltip="Remove Question"
           mat-icon-button
           color="warn"
@@ -92,3 +92,4 @@
     </mat-card-actions>
   </mat-card>
 </div>
+

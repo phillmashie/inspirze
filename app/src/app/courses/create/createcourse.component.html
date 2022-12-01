@@ -72,8 +72,15 @@
           Description is <strong>required</strong>
         </mat-error>
       </mat-form-field>
+
+      <mat-divider class="mt-3 mb-3"></mat-divider>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button
+        mat-raised-button
+        type="button"
+        (click)="onBack()"
+      >BACK</button>
+        <button mat-raised-button matStepperNext>Next</button>
       </div>
     </div>
   </mat-step>
@@ -106,6 +113,8 @@
         </mat-expansion-panel>
       </mat-accordion>
 
+      <mat-divider class="mt-3 mb-3"></mat-divider>
+
       <button
         class="add_section_button"
         mat-stroked-button
@@ -117,34 +126,76 @@
         Add Module
       </button>
 
+      <mat-divider class="mt-3 mb-3"></mat-divider>
+
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
       </div>
 
     </div>
 
   </mat-step>
   </div>
-  <mat-step  label="Adding Quiz">
-    <div>
+  <mat-step  label="Adding Quiz Questions">
+
+    <div [formGroup]="courseFormGroup">
+      <h4>Quiz</h4>
+      <mat-accordion formArrayName="quizs" multi="true">
+        <mat-expansion-panel
+          *ngFor="let quiz of courseFormGroup.get('quizs')['controls']; let i = index;"
+          [expanded]="i === 0"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              #{{i + 1}}
+            </mat-panel-title>
+            <mat-panel-description>
+              {{quiz.get('title').value}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div [formGroupName]="i">
+            <app-course-quiz
+              [quizFormGroup]="quiz"
+              [courseFormGroup]="courseFormGroup"
+              [quizIndex]="i"
+            ></app-course-quiz>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <mat-divider class="mt-3 mb-3"></mat-divider>
+
+      <button
+        class="add_quiz_button"
+        mat-stroked-button
+        color="primary"
+        type="button"
+        (click)="onAddQuiz()"
+      >
+        <mat-icon>add</mat-icon>
+        Add Quiz
+      </button>
+
+      <mat-divider class="mt-3 mb-3"></mat-divider>
+
+      <div>
+        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-raised-button matStepperNext>Next</button>
+      </div>
 
     </div>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
-    </div>
+
   </mat-step>
+
 
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
+    <mat-divider class="mt-3 mb-3"></mat-divider>
     <div >
-      <button
-        mat-raised-button
-        type="button"
-        (click)="onBack()"
-      >BACK</button>
+      <button mat-raised-button matStepperPrevious>Back</button>
 
       <button
         mat-raised-button

@@ -45,10 +45,11 @@ import { NavComponent } from './shared/nav/nav.component';
 import { TopBarComponent } from './shared/top-bar/top-bar.component';
 import { LoaderComponent } from './shared/ui/loader/loader.component';
 import { CountdownModule } from 'ngx-countdown';
-import { QuizComponent} from './courses/create/course-section/quiz/quiz.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PaginationComponent } from './courses/pagination/pagination.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { CourseQuizComponent } from './courses/create/course-quiz/course-quiz.component';
+import { CourseQuestionComponent } from './courses/create/course-quiz/course-question/course-question.component';
 
 
 
@@ -74,8 +75,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NavComponent,
     TopBarComponent,
     LoaderComponent,
-    QuizComponent,
     PaginationComponent,
+    CourseQuizComponent,
+    CourseQuestionComponent,
 
 
 

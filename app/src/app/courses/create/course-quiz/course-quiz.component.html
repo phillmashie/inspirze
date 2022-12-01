@@ -1,0 +1,64 @@
+<div [formGroup]="quizFormGroup">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Module title"
+      formControlName="title"
+      required
+    >
+    <mat-error *ngIf="quizFormGroup.get('title').hasError('required')">
+      Section title is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <!--ATBBRmyNzKkNvgtucQcT4TQZXUxTF2F7704B-->
+
+    <mat-divider class="mt-3 mb-3"></mat-divider>
+
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <div
+        *ngFor="let question of quizFormGroup.get('questions')['controls']; let i = index;"
+        cdkDrag
+        [cdkDragDisabled]="quizFormGroup.get('questions')['controls'].length === 1"
+      >
+        <div class="quiz-drag-placeholder mb-4" *cdkDragPlaceholder></div>
+        <app-course-question
+          [questionFormGroup]="question"
+          [quizFormGroup]="quizFormGroup"
+          [courseFormGroup]="courseFormGroup"
+          [questionIndex]="i"
+          [quizIndex]="quizIndex"
+        >
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24" cdkDragHandle>
+            <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+        </app-course-question>
+      </div>
+    </div>
+
+    <mat-divider class="mt-3 mb-3"></mat-divider>
+
+  <div class="d-flex justify-content-between">
+    <button
+      class="add_section_button"
+      mat-button
+      color="primary"
+      type="button"
+      (click)="onAddQuestion()"
+    >
+    <mat-icon>add</mat-icon>
+      Add Question
+    </button>
+
+    <button
+      *ngIf="courseFormGroup.get('sections')['controls'].length > 1"
+      mat-button
+      color="warn"
+      type="button"
+      (click)="onRemoveQuiz(quizIndex)"
+    >
+      <mat-icon>delete_outline</mat-icon>
+      Remove Quiz
+    </button>
+  </div>
+</div>

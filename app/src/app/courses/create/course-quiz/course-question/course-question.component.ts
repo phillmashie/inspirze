@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormArray, ValidationErrors, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, ValidationErrors, NgForm, FormBuilder, Validators } from '@angular/forms';
 import { CoursesService } from '../../../courses.service';
 import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -8,27 +8,28 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Question } from '../../../../interfaces/question';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-quiz',
-  templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.sass']
+  selector: 'app-course-question',
+  templateUrl: './course-question.component.html',
+  styleUrls: ['./course-question.component.css']
 })
-export class QuizComponent implements OnInit, OnDestroy {
+export class CourseQuestionComponent implements OnInit, OnDestroy {
   changeVideoSubject: Subject<void> = new Subject<void>();
 
   @Input() questionFormGroup: FormGroup;
-  @Input() sectionFormGroup: FormGroup;
+  @Input() quizFormGroup: FormGroup;
   @Input() courseFormGroup: FormGroup;
   @Input() questionIndex: number;
-  @Input() sectionIndex: number;
+  @Input() quizIndex: number;
 
   formChangesSubscription: Subscription;
 
   progress = 0;
   successMsg = '';
   question: Question;
-  sectionId: string;
+  quizId: string;
   courseId: string;
 
   backendURL = environment.backendURL;
@@ -42,7 +43,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.question = new Question().deserialize(this.questionFormGroup.value);
-    this.sectionId = this.sectionFormGroup.get('id').value;
+    this.quizId = this.quizFormGroup.get('id').value;
     this.courseId = this.courseFormGroup.get('id').value;
     this.formChangesSubscription = this.subcribeToFormChanges();
   }
@@ -117,7 +118,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.coursesService
           .deleteQuestion(this.question.id)
           .subscribe(res => {
-            const control = this.sectionFormGroup.get('questions') as FormArray;
+            const control = this.quizFormGroup.get('questions') as FormArray;
             control.removeAt(questionIndex);
             this.notificationService.showSuccess('Question successfully deleted');
           });
