@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { Course } from '../../interfaces/course';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogModel } from 'src/app/shared/ui/confirm-dialog/confirm-dialog.component';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { BooleanInput } from '@angular/cdk/coercion';
 
  @Component({
@@ -224,6 +224,15 @@ isLinear = false;
           this.course = new Course().deserialize(course);
           this.courseFormGroup = this.setForm(course);
         });
+    const draft = localStorage.getItem("STEP_1");
+    if (draft) {
+      this.courseFormGroup.setValue(JSON.parse(draft));
+    }
+    this.courseFormGroup.valueChanges
+        .pipe(
+          filter(() => this.courseFormGroup.valid)
+        )
+        .subscribe (val => localStorage.setItem("STEP_1", JSON.stringify(val) ));
     }
   }
 
